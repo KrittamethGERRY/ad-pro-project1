@@ -54,7 +54,7 @@
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se233.audioconverterproject.controller.MainViewController">
   <children>
-    <MenuBar VBox.vgrow="NEVER">
+    <MenuBar prefWidth="640.0" VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
@@ -98,9 +98,9 @@
             <Pane layoutX="35.0" layoutY="41.0" prefHeight="256.0" prefWidth="256.0">
                <children>
                   <Region fx:id="dropRegion" prefHeight="256.0" prefWidth="256.0" style="-fx-background-color: lightgray;" />
-                  <ImageView fx:id="uploadIcon" fitHeight="128.0" fitWidth="128.0" layoutX="69.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.2; -fx-blend-mode: multiply;">
+                  <ImageView fitHeight="128.0" fitWidth="128.0" layoutX="69.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.2; -fx-blend-mode: multiply;">
                      <image>
-                        <Image url="@../../../../../../../../Downloads/music-file.png" />
+                        <Image url="@music-file.png" />
                      </image>
                   </ImageView>
                   <Hyperlink layoutX="27.0" layoutY="216.0" text="Click here to browse file from device" />
@@ -145,6 +145,7 @@
                         </Label>
                         <RadioButton fx:id="sampleRate41kRadio" mnemonicParsing="false" text="41000 Hz" />
                         <RadioButton fx:id="sampleRate48kRadio" mnemonicParsing="false" text="48000 Hz" />
+                        <RadioButton fx:id="sampleRate41kRadio1" mnemonicParsing="false" text="96000 Hz" />
                      </children>
                   </VBox>
                </left>
