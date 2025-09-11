@@ -98,7 +98,7 @@
             <Pane layoutX="35.0" layoutY="41.0" prefHeight="256.0" prefWidth="256.0">
                <children>
                   <Region fx:id="dropRegion" prefHeight="256.0" prefWidth="256.0" style="-fx-background-color: lightgray;" />
-                  <ImageView fitHeight="128.0" fitWidth="128.0" layoutX="69.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.2; -fx-blend-mode: multiply;">
+                  <ImageView fx:id="uploadIcon" fitHeight="128.0" fitWidth="128.0" layoutX="69.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.2; -fx-blend-mode: multiply;">
                      <image>
                         <Image url="@../../../../../../../../Downloads/music-file.png" />
                      </image>
