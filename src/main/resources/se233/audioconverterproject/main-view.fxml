@@ -126,7 +126,7 @@
             </Pane>
             <BorderPane layoutX="336.0" layoutY="105.0" prefHeight="128.0" prefWidth="256.0">
                <top>
-                  <Label text="Advanced settings" BorderPane.alignment="CENTER">
+                  <Label prefWidth="121.0" text="Advanced settings" BorderPane.alignment="CENTER">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -143,7 +143,7 @@
                               <Insets />
                            </VBox.margin>
                         </Label>
-                        <RadioButton fx:id="sampleRate41kRadio" mnemonicParsing="false" text="41000 Hz" />
+                        <RadioButton fx:id="sampleRate41kRadio" mnemonicParsing="false" text="44100 Hz" />
                         <RadioButton fx:id="sampleRate48kRadio" mnemonicParsing="false" text="48000 Hz" />
                         <RadioButton fx:id="sampleRate96kRadio" mnemonicParsing="false" text="96000 Hz" />
                      </children>
@@ -155,6 +155,7 @@
                         <Label alignment="CENTER" prefWidth="128.0" text="Channels" />
                         <RadioButton fx:id="monoRadio" mnemonicParsing="false" text="Mono" />
                         <RadioButton fx:id="stereoRadio" mnemonicParsing="false" text="Stereo" />
+                        <ComboBox fx:id="bitrateComboBox" prefWidth="150.0" promptText="Bitrate" />
                      </children>
                   </VBox>
                </right>

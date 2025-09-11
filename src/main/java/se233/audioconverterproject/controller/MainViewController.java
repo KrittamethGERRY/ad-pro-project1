@@ -1,5 +1,6 @@
 package se233.audioconverterproject.controller;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -7,14 +8,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import se233.audioconverterproject.Launcher;
 
+import java.util.*;
+
+import static java.util.Map.entry;
+
 public class MainViewController {
     @FXML private Region dropRegion;
 
     @FXML private Button convertBtn;
 
-    @FXML private ComboBox audioFormatComboBox;
+    @FXML private ComboBox<String> audioFormatComboBox;
 
-    @FXML private ComboBox audioQualityComboBox;
+    @FXML private ComboBox<Integer> audioQualityComboBox;
 
     @FXML private ProgressBar progressBar;
     
@@ -22,6 +27,7 @@ public class MainViewController {
 
     @FXML private RadioButton monoRadio;
     @FXML private RadioButton stereoRadio;
+    @FXML private ComboBox<Integer> bitrateComboBox;
 
     @FXML private RadioButton sampleRate41kRadio;
     @FXML private RadioButton sampleRate48kRadio;
@@ -29,6 +35,14 @@ public class MainViewController {
 
     private ToggleGroup channelsGroup;
     private ToggleGroup qualityGroup;
+
+    public static String[] formats = {"mp3", "wav", "ogg", "m4a", "flac"};
+    public static HashMap<String, Integer> qualities = (HashMap<String, Integer>) Map.ofEntries(
+            entry("Economy (64 kbps)", 64_000),
+            entry("Standard (128 kbps)", 128_000),
+            entry("Good (192 kbps)", 192_000),
+            entry("Best (320 kbps)", 320_000)
+    );
 
     public void initialize(){
         uploadIcon.setImage(new Image(Launcher.class.getResourceAsStream("music-file.png")));
@@ -40,5 +54,7 @@ public class MainViewController {
         this.sampleRate41kRadio.setToggleGroup(qualityGroup);
         this.sampleRate48kRadio.setToggleGroup(qualityGroup);
         this.sampleRate96kRadio.setToggleGroup(qualityGroup);
+
+        audioFormatComboBox.getItems().addAll(formats);
     }
 }
