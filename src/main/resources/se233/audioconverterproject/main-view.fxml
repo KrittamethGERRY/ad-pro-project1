@@ -145,7 +145,7 @@
                         </Label>
                         <RadioButton fx:id="sampleRate41kRadio" mnemonicParsing="false" text="41000 Hz" />
                         <RadioButton fx:id="sampleRate48kRadio" mnemonicParsing="false" text="48000 Hz" />
-                        <RadioButton fx:id="sampleRate41kRadio1" mnemonicParsing="false" text="96000 Hz" />
+                        <RadioButton fx:id="sampleRate96kRadio" mnemonicParsing="false" text="96000 Hz" />
                      </children>
                   </VBox>
                </left>
