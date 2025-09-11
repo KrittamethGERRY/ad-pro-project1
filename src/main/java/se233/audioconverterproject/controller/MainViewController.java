@@ -1,6 +1,5 @@
 package se233.audioconverterproject.controller;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
