@@ -25,6 +25,7 @@ public class MainViewController {
 
     @FXML private RadioButton sampleRate41kRadio;
     @FXML private RadioButton sampleRate48kRadio;
+    @FXML private RadioButton sampleRate96kRadio;
 
     private ToggleGroup channelsGroup;
     private ToggleGroup qualityGroup;
@@ -38,5 +39,6 @@ public class MainViewController {
 
         this.sampleRate41kRadio.setToggleGroup(qualityGroup);
         this.sampleRate48kRadio.setToggleGroup(qualityGroup);
+        this.sampleRate96kRadio.setToggleGroup(qualityGroup);
     }
 }
