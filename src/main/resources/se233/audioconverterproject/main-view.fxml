@@ -119,7 +119,7 @@
             <Pane layoutX="336.0" layoutY="41.0" prefHeight="48.0" prefWidth="256.0">
                <children>
                   <Label layoutX="2.0" text="Convert to" />
-                  <ComboBox fx:id="audioFormatComboBox" layoutX="2.0" layoutY="16.0" prefHeight="32.0" prefWidth="72.0" promptText="mp3" />
+                  <ComboBox fx:id="audioFormatComboBox" layoutY="18.0" prefHeight="32.0" prefWidth="72.0" promptText="mp3" />
                   <Label layoutX="96.0" text="Quality" />
                   <ComboBox fx:id="audioQualityComboBox" layoutX="96.0" layoutY="16.0" prefHeight="32.0" prefWidth="160.0" promptText="Good (192 kbps)" />
                </children>
@@ -138,14 +138,8 @@
                <left>
                   <VBox prefHeight="200.0" prefWidth="128.0" spacing="10.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="128.0" text="Sample Rate" textAlignment="CENTER">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </Label>
-                        <RadioButton fx:id="sampleRate41kRadio" mnemonicParsing="false" text="44100 Hz" />
-                        <RadioButton fx:id="sampleRate48kRadio" mnemonicParsing="false" text="48000 Hz" />
-                        <RadioButton fx:id="sampleRate96kRadio" mnemonicParsing="false" text="96000 Hz" />
+                        <ComboBox fx:id="bitrateComboBox" prefWidth="150.0" promptText="Sample rate" />
+                        <ComboBox fx:id="bitrateComboBox1" prefWidth="150.0" promptText="Bitrate" />
                      </children>
                   </VBox>
                </left>
@@ -155,7 +149,6 @@
                         <Label alignment="CENTER" prefWidth="128.0" text="Channels" />
                         <RadioButton fx:id="monoRadio" mnemonicParsing="false" text="Mono" />
                         <RadioButton fx:id="stereoRadio" mnemonicParsing="false" text="Stereo" />
-                        <ComboBox fx:id="bitrateComboBox" prefWidth="150.0" promptText="Bitrate" />
                      </children>
                   </VBox>
                </right>
