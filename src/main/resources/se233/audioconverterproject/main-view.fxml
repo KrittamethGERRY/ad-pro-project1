@@ -119,9 +119,9 @@
             <Pane layoutX="336.0" layoutY="41.0" prefHeight="48.0" prefWidth="256.0">
                <children>
                   <Label layoutX="2.0" text="Convert to" />
-                  <ComboBox fx:id="audioFormatComboBox" layoutY="18.0" prefHeight="32.0" prefWidth="72.0" promptText="mp3" />
+                  <ComboBox fx:id="audioFormatComboBox" layoutY="18.0" prefHeight="32.0" prefWidth="72.0" />
                   <Label layoutX="96.0" text="Quality" />
-                  <ComboBox fx:id="audioQualityComboBox" layoutX="96.0" layoutY="16.0" prefHeight="32.0" prefWidth="160.0" promptText="Good (192 kbps)" />
+                  <ComboBox fx:id="audioQualityComboBox" layoutX="96.0" layoutY="16.0" prefHeight="32.0" prefWidth="160.0" />
                </children>
             </Pane>
             <BorderPane layoutX="336.0" layoutY="105.0" prefHeight="128.0" prefWidth="256.0">
@@ -138,8 +138,8 @@
                <left>
                   <VBox prefHeight="200.0" prefWidth="128.0" spacing="10.0" BorderPane.alignment="CENTER">
                      <children>
-                        <ComboBox fx:id="bitrateComboBox" prefWidth="150.0" promptText="Sample rate" />
-                        <ComboBox fx:id="bitrateComboBox1" prefWidth="150.0" promptText="Bitrate" />
+                        <ComboBox fx:id="sampleRateComboBox" prefWidth="150.0" promptText="Sample rate" />
+                        <ComboBox fx:id="bitrateComboBox" prefWidth="150.0" promptText="Bitrate" />
                      </children>
                   </VBox>
                </left>

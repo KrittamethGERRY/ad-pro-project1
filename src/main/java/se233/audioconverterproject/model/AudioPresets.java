@@ -1,12 +1,14 @@
 package se233.audioconverterproject.model;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import static java.util.Map.entry;
 
 public class AudioPresets {
-    public static String[] formats = {"mp3", "wav", "ogg", "m4a"};
+    public static String[] formats = {"mp3", "wav", "flac", "m4a"};
 
     public static Map<String,Map<String, Integer>> presets = new LinkedHashMap<>(Map.ofEntries(
             entry("mp3",Map.ofEntries(
@@ -27,11 +29,8 @@ public class AudioPresets {
                     entry("Good (160 kbps)", 160_000),
                     entry("Best (256 kbps)",256_000)
             )),
-            entry("ogg", Map.ofEntries(
-                    entry("Economy (64 kbps)", 64_000),
-                    entry( "Standard (128 kbps)", 128_000),
-                    entry("Good (160 kbps)", 160_000),
-                    entry("Best (256 kbps)",256_000)
+            entry("flac", Map.ofEntries(
+
             ))
     ));
 
@@ -73,15 +72,6 @@ public class AudioPresets {
             entry("448 kbps", 448_000),
             entry("512 kbps", 512_000)
     ));
-    public static Map<String, Integer> bitratesOGG = new LinkedHashMap<>(Map.ofEntries(
-            entry("96 kbps", 32_000),
-            entry("112 kbps", 40_000),
-            entry("128 kbps", 48_000),
-            entry("160 kbps", 56_000),
-            entry("192 kbps", 64_000),
-            entry("224 kbps", 80_000),
-            entry("256 kbps",  96_000)
-    ));
     // END OF BITRATES
 
     // SAMPLE RATE
@@ -105,7 +95,7 @@ public class AudioPresets {
             entry("96000 kHz", 96_000)
     ));
 
-    public static Map<String, Integer> sampleRatesM4A_OGG = new LinkedHashMap<>(Map.ofEntries(
+    public static Map<String, Integer> sampleRatesM4A_FLAC = new LinkedHashMap<>(Map.ofEntries(
             entry("8000 kHz", 8_000),
             entry("11025 kHz", 11_025),
             entry("12000 kHz", 12_000),
