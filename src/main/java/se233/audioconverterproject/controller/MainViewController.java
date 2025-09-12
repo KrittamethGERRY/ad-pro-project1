@@ -8,6 +8,9 @@ import javafx.scene.layout.Region;
 import se233.audioconverterproject.Launcher;
 
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import static java.util.Map.entry;
 
 public class MainViewController {
@@ -90,5 +93,10 @@ public class MainViewController {
             bitrateComboBox.getItems().add(entry.getKey());
         }
         bitrateComboBox.getSelectionModel().select(0);
+    }
+
+    public void convert() {
+        ExecutorService executor = Executors.newFixedThreadPool(4);
+
     }
 }
