@@ -8,7 +8,6 @@ import javafx.scene.layout.Region;
 import se233.audioconverterproject.Launcher;
 
 import java.util.*;
-
 import static java.util.Map.entry;
 
 public class MainViewController {
@@ -59,7 +58,6 @@ public class MainViewController {
             entry("256 kbps", 256_000),
             entry("320 kbps", 320_000)
     ));
-
 
     public void initialize(){
         uploadIcon.setImage(new Image(Launcher.class.getResourceAsStream("music-file.png")));

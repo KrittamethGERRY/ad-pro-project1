@@ -1,6 +1,7 @@
 module se233.audioconverterproject {
     requires javafx.controls;
     requires javafx.fxml;
+    requires ffmpeg;
 
 
     opens se233.audioconverterproject to javafx.fxml;
