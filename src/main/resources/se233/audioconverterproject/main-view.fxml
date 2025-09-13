@@ -37,6 +37,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -54,7 +55,7 @@
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se233.audioconverterproject.controller.MainViewController">
   <children>
-    <MenuBar VBox.vgrow="NEVER">
+    <MenuBar prefWidth="640.0" VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
@@ -98,13 +99,14 @@
             <Pane layoutX="35.0" layoutY="41.0" prefHeight="256.0" prefWidth="256.0">
                <children>
                   <Region fx:id="dropRegion" prefHeight="256.0" prefWidth="256.0" style="-fx-background-color: lightgray;" />
-                  <ImageView fitHeight="128.0" fitWidth="128.0" layoutX="69.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.2; -fx-blend-mode: multiply;">
+                  <ImageView fx:id="uploadIcon" fitHeight="128.0" fitWidth="128.0" layoutX="69.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.2; -fx-blend-mode: multiply;">
                      <image>
-                        <Image url="@../../../../../../../../Downloads/music-file.png" />
+                        <Image url="https://placehold.co/400" />
                      </image>
                   </ImageView>
-                  <Hyperlink layoutX="27.0" layoutY="216.0" text="Click here to browse file from device" />
-                  <Label layoutX="76.0" layoutY="180.0" text="Drag audio file here" />
+                  <ListView fx:id="InputListView" layoutX="9.0" prefHeight="168.0" prefWidth="239.0" style="-fx-background-color: lightgray;" />
+                  <Hyperlink fx:id="Clickable_link" layoutX="27.0" layoutY="216.0" text="Click here to browse file from device" />
+                  <Label fx:id="AudioLebel" layoutX="76.0" layoutY="180.0" text="Drag audio file here" />
                   <Label layoutX="121.0" layoutY="200.0" text="or" />
                </children>
             </Pane>
@@ -119,14 +121,14 @@
             <Pane layoutX="336.0" layoutY="41.0" prefHeight="48.0" prefWidth="256.0">
                <children>
                   <Label layoutX="2.0" text="Convert to" />
-                  <ComboBox fx:id="audioFormatComboBox" layoutX="2.0" layoutY="16.0" prefHeight="32.0" prefWidth="72.0" promptText="mp3" />
+                  <ComboBox fx:id="audioFormatComboBox" layoutY="18.0" prefHeight="32.0" prefWidth="72.0" />
                   <Label layoutX="96.0" text="Quality" />
-                  <ComboBox fx:id="audioQualityComboBox" layoutX="96.0" layoutY="16.0" prefHeight="32.0" prefWidth="160.0" promptText="Good (192 kbps)" />
+                  <ComboBox fx:id="audioQualityComboBox" layoutX="96.0" layoutY="16.0" prefHeight="32.0" prefWidth="160.0" />
                </children>
             </Pane>
             <BorderPane layoutX="336.0" layoutY="105.0" prefHeight="128.0" prefWidth="256.0">
                <top>
-                  <Label text="Advanced settings" BorderPane.alignment="CENTER">
+                  <Label prefWidth="121.0" text="Advanced settings" BorderPane.alignment="CENTER">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -138,13 +140,8 @@
                <left>
                   <VBox prefHeight="200.0" prefWidth="128.0" spacing="10.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="128.0" text="Sample Rate" textAlignment="CENTER">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </Label>
-                        <RadioButton fx:id="sampleRate41kRadio" mnemonicParsing="false" text="41000 Hz" />
-                        <RadioButton fx:id="sampleRate48kRadio" mnemonicParsing="false" text="48000 Hz" />
+                        <ComboBox fx:id="sampleRateComboBox" prefWidth="150.0" promptText="Sample rate" />
+                        <ComboBox fx:id="bitrateComboBox" prefWidth="150.0" promptText="Bitrate" />
                      </children>
                   </VBox>
                </left>
