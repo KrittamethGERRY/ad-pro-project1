@@ -10,29 +10,30 @@ import se233.audioconverterproject.Launcher;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.concurrent.Callable;
 
-public class ReduceMapTaskConverter {
+public class ReduceMapTaskConverter implements Callable<String> {
 
     private static FFmpeg ffmpeg;
     private static FFprobe ffprobe;
     private String format;
     private int quality;
+    private int samplerate;
     private int bitrate;
     private int channel;
     private String filePath;
 
-    public ReduceMapTaskConverter(String format, int quality, int bitrate, int channel, String filePath) {
+    public ReduceMapTaskConverter(String format, int quality, int samplerate, Integer bitrate, int channel, String filePath) {
         this.format = format;
         this.quality = quality;
+        this.samplerate = samplerate;
         this.bitrate = bitrate;
         this.channel = channel;
         this.filePath = filePath;
     }
 
     public String call() throws URISyntaxException, IOException {
+        System.out.println("Starting Reduce Map Task Converter");
         File ffmpegFile = new File(Launcher.class.getResource("ffmpeg/bin/ffmpeg.exe").toURI());
         File ffprobeFile = new File(Launcher.class.getResource("ffmpeg/bin/ffprobe.exe").toURI());
 
@@ -44,18 +45,18 @@ public class ReduceMapTaskConverter {
 
         FFmpegBuilder builder = new FFmpegBuilder()
                 .setInput(inputFile.toString())
-                .addOutput("output.ogg")
+                .addOutput("D:/output.m4a")
                 .setFormat(format)
-                .setAudioSampleRate(44100)
-                .setAudioCodec("libvorbis")
+                .setAudioSampleRate(samplerate)
                 .setAudioQuality(quality)
-                .setAudioChannels(2)
-                .setAudioBitRate(128_000)
-                .done();
+                .setAudioChannels(channel)
+                .done()
+                .overrideOutputFiles(true);
 
 
         FFmpegExecutor executor = new FFmpegExecutor(ffmpeg, ffprobe);
         executor.createJob(builder).run();
+
         return "Audio created at " ;
     }
 }

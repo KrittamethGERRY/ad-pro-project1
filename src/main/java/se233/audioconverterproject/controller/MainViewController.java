@@ -37,7 +37,7 @@ public class MainViewController {
 
     private ToggleGroup channelsGroup;
 
-    public void initialize(){
+    public void initialize() throws ExecutionException, InterruptedException {
         uploadIcon.setImage(new Image(Launcher.class.getResourceAsStream("music-file.png")));
 
         // GROUPING RADIO BUTTON TOGETHER
@@ -67,5 +67,10 @@ public class MainViewController {
         } else {
             System.out.println("audioFormatComboBox already populated");
         }
+
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+        FutureTask futureTask = new FutureTask(new ReduceMapTaskConverter(formats[1], 20_000, 44_100, 1, 2, ""));
+        executor.submit(futureTask);
+        System.out.println(futureTask.get());
     }
 }
