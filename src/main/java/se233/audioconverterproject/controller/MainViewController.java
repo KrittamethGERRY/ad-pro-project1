@@ -48,7 +48,6 @@ public class MainViewController {
     @FXML private ComboBox<String> sampleRateComboBox;
     @FXML private ComboBox<String> bitrateComboBox;
     private ToggleGroup channelsGroup;
-
     public void initialize(){
         uploadIcon.setImage(new Image(Launcher.class.getResourceAsStream("music-file.png")));
 
