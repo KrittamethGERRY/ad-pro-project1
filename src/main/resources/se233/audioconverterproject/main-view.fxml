@@ -99,12 +99,12 @@
             <Pane layoutX="35.0" layoutY="41.0" prefHeight="256.0" prefWidth="256.0">
                <children>
                   <Region fx:id="dropRegion" prefHeight="256.0" prefWidth="256.0" style="-fx-background-color: lightgray;" />
+                  <ListView fx:id="InputListView" layoutX="9.0" prefHeight="168.0" prefWidth="239.0" style="-fx-background-color: lightgray;" />
                   <ImageView fx:id="uploadIcon" fitHeight="128.0" fitWidth="128.0" layoutX="69.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.2; -fx-blend-mode: multiply;">
                      <image>
                         <Image url="https://placehold.co/400" />
                      </image>
                   </ImageView>
-                  <ListView fx:id="InputListView" layoutX="9.0" prefHeight="168.0" prefWidth="239.0" style="-fx-background-color: lightgray;" />
                   <Hyperlink fx:id="Clickable_link" layoutX="27.0" layoutY="216.0" text="Click here to browse file from device" />
                   <Label fx:id="AudioLebel" layoutX="76.0" layoutY="180.0" text="Drag audio file here" />
                   <Label layoutX="121.0" layoutY="200.0" text="or" />
@@ -156,6 +156,7 @@
                </right>
             </BorderPane>
             <ProgressBar fx:id="progressBar" layoutX="35.0" layoutY="317.0" prefHeight="32.0" prefWidth="558.0" progress="0.0" />
+            <Button fx:id="RemoveButton" layoutX="137.0" layoutY="14.0" mnemonicParsing="false" text="Remove" />
          </children>
       </AnchorPane>
   </children>

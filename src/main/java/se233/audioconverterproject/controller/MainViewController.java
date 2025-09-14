@@ -2,11 +2,14 @@ package se233.audioconverterproject.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Region;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import se233.audioconverterproject.Launcher;
 import se233.audioconverterproject.model.AudioPresets;
 
@@ -14,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.*;
 
 import static java.util.Map.entry;
@@ -26,6 +30,8 @@ public class MainViewController {
     @FXML private Hyperlink Clickable_link;
 
     @FXML private Region dropRegion;
+
+    @FXML private Button RemoveButton;
 
     @FXML private Button convertBtn;
 
@@ -58,6 +64,9 @@ public class MainViewController {
 
             audioFormatComboBox.setOnAction(event -> {      // WHEN THE CONVERSION FORMAT IS CHANGED, THE QUALITIES ARE GOING TO CHANGE TOO, IN ORDER TO MATCH WITH THE FORMAT TYPE
                 audioQualityComboBox.getItems().clear();
+                sampleRateComboBox.getItems().clear();
+                bitrateComboBox.getItems().clear();
+
                 String key = audioFormatComboBox.getSelectionModel().getSelectedItem();
                 audioQualityComboBox.setDisable(key.equals("flac"));
 
@@ -65,9 +74,36 @@ public class MainViewController {
                 sortedList.sort(Map.Entry.comparingByValue());
 
                 for (Map.Entry<String, Integer> entry : sortedList) {
-                    audioQualityComboBox.getItems().add(entry.getKey());        // ADD THE QUALITY SELECTION FROM PRESET AND SORTED ASCENDINGLY
+                    audioQualityComboBox.getItems().add(entry.getKey()); // ADD THE QUALITY SELECTION FROM PRESET AND SORTED ASCENDINGLY
                 }
                 audioQualityComboBox.getSelectionModel().select(0);     // SELECT A DEFAULT QUALITY
+
+                Map<String, Integer> bitrateMap = switch (key) {
+                    case "mp3" -> AudioPresets.bitratesMP3;
+                    case "m4a" -> AudioPresets.bitratesM4A;
+                    default -> null;
+                };
+
+                if (bitrateMap != null) {
+                    for (String bitrate : bitrateMap.keySet()) {
+                        bitrateComboBox.getItems().add(bitrate);
+                    }
+                    if (!bitrateComboBox.getItems().isEmpty()) {
+                        bitrateComboBox.getSelectionModel().select(0);
+                    }
+                }
+
+                Map<String, Integer> sampleRateMap = switch (key) {
+                    case "mp3" -> AudioPresets.sampleRatesMP3;
+                    case "wav" -> AudioPresets.sampleRatesWAV;
+                    case "m4a", "flac" -> AudioPresets.sampleRatesM4A_FLAC;
+                    default -> null;
+                };
+
+                if (sampleRateMap != null) {
+                    sampleRateComboBox.getItems().addAll(sampleRateMap.keySet());
+                    sampleRateComboBox.getSelectionModel().select(0);
+                }
             });
 
         } else {
@@ -117,11 +153,38 @@ public class MainViewController {
                 fileName = file.getName();
                 InputListView.getItems().add(fileName);
                 uploadIcon.setVisible(false);
-                System.out.println(fileName);
             }
 
             event.setDropCompleted(success);
             event.consume();
+        });
+
+        Clickable_link.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Select a file");
+
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("All Files", "*.*")
+            );
+
+            Stage stage = (Stage) Clickable_link.getScene().getWindow();
+            File selectedFile = fileChooser.showOpenDialog(stage);
+            InputListView.getItems().add(selectedFile.getName());
+            uploadIcon.setVisible(false);
+        });
+
+        RemoveButton.setOnAction(event -> {
+            Object selectedItem = InputListView.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+                InputListView.getItems().remove(selectedItem);
+            } else {
+
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a file to remove.");
+                alert.showAndWait();
+            }
+            if (InputListView.getItems().size() == 0) {
+                uploadIcon.setVisible(true);
+            }
         });
     }
 }
