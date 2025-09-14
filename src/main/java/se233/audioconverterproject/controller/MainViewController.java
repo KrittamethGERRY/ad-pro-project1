@@ -177,7 +177,6 @@ public class MainViewController {
             if (selectedItem != null) {
                 InputListView.getItems().remove(selectedItem);
             } else {
-
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a file to remove.");
                 alert.showAndWait();
             }
