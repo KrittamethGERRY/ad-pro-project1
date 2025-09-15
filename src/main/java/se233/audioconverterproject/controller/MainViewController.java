@@ -168,8 +168,18 @@ public class MainViewController {
 
             Stage stage = (Stage) Clickable_link.getScene().getWindow();
             File selectedFile = fileChooser.showOpenDialog(stage);
-            InputListView.getItems().add(selectedFile.getName());
-            uploadIcon.setVisible(false);
+
+            if (selectedFile != null) {
+                InputListView.getItems().add(selectedFile.getName());
+                uploadIcon.setVisible(false);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("No File Selected");
+                alert.setHeaderText(null);
+                alert.setContentText("You didn't choose any file.");
+                alert.showAndWait();
+            }
+
         });
 
         RemoveButton.setOnAction(event -> {
