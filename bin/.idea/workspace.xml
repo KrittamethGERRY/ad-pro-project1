@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d9b1e796-790f-4638-bc7a-882ee89055b7" name="Changes" comment="Update">
+      <change beforePath="$PROJECT_DIR$/src/main/java/se233/audioconverterproject/controller/MainViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/se233/audioconverterproject/controller/MainViewController.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="utility_project" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;KrittamethGERRY&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/KrittamethGERRY/ad-pro-project1.git&quot;,
+    &quot;accountId&quot;: &quot;a382bfad-7924-4afc-a2fb-1bbe228a4dc9&quot;
+  }
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="32UeOCuQv9eIkS9EAkRF2VGISVL" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Launcher.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;utility__project&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/GERRY/OneDrive - Chiang Mai University/GERRY's VS Code files/AudioConverterProject/src/main/resources/se233/audioconverterproject&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\GERRY\OneDrive - Chiang Mai University\GERRY's VS Code files\AudioConverterProject\src\main\resources\se233\audioconverterproject" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\GERRY\OneDrive - Chiang Mai University\GERRY's VS Code files\AudioConverterProject\src\main\resources\se233\audioconverterproject" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Launcher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="FFMPEG_PATH" value="C:\Users\GERRY\OneDrive - Chiang Mai University\GERRY's VS Code files\AudioConverterProject\src\main\resources\se233\audioconverterproject\ffmpeg\bin\ffmpeg.exe" />
+        <env name="FFPROBE_PATH" value="C:\Users\GERRY\OneDrive - Chiang Mai University\GERRY's VS Code files\AudioConverterProject\src\main\resources\se233\audioconverterproject\ffmpeg\bin\ffprobe.exe" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="se233.audioconverterproject.Launcher" />
+      <module name="AudioConverterProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="se233.audioconverterproject.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Launcher" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d9b1e796-790f-4638-bc7a-882ee89055b7" name="Changes" comment="" />
+      <created>1757479544649</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1757479544649</updated>
+      <workItem from="1757479546008" duration="1945000" />
+      <workItem from="1757482408387" duration="560000" />
+      <workItem from="1757490569523" duration="2548000" />
+      <workItem from="1757556559629" duration="19000" />
+      <workItem from="1757559339165" duration="5076000" />
+      <workItem from="1757596651203" duration="3971000" />
+      <workItem from="1757650020003" duration="20048000" />
+      <workItem from="1757741808903" duration="2188000" />
+      <workItem from="1757744032045" duration="208000" />
+      <workItem from="1757844807488" duration="132000" />
+      <workItem from="1757845113902" duration="714000" />
+      <workItem from="1757845844436" duration="399000" />
+      <workItem from="1757846292535" duration="443000" />
+    </task>
+    <task id="LOCAL-00001" summary="Uploaded initialized files">
+      <option name="closed" value="true" />
+      <created>1757481348326</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1757481348326</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Uploaded initialized files">
+      <option name="closed" value="true" />
+      <created>1757481364885</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1757481364885</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Updated the main-view.fxml and added an image">
+      <option name="closed" value="true" />
+      <created>1757559867755</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1757559867755</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Updated the main-view.fxml and added an image">
+      <option name="closed" value="true" />
+      <created>1757561915645</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1757561915645</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Updated the main-view.fxml and added an image">
+      <option name="closed" value="true" />
+      <created>1757561987976</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1757561987976</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Updated the main-view.fxml and added an image">
+      <option name="closed" value="true" />
+      <created>1757562400604</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1757562400604</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Updated the main-view.fxml and modified MainViewController.java">
+      <option name="closed" value="true" />
+      <created>1757600236811</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1757600236812</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Nothing">
+      <option name="closed" value="true" />
+      <created>1757600540398</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1757600540398</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Updated MainViewController.java">
+      <option name="closed" value="true" />
+      <created>1757600561668</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1757600561668</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Updated main-view.fxml">
+      <option name="closed" value="true" />
+      <created>1757600630364</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1757600630364</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Updated MainViewController.java&#10;Initialized all of the comboboxes">
+      <option name="closed" value="true" />
+      <created>1757655586926</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1757655586926</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Updated MainViewController.java and ReduceMapTaskConverter.java">
+      <option name="closed" value="true" />
+      <created>1757656371336</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1757656371336</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Added ffmpeg.exe, ffplay.exe, and ffprobe.exe inside a resource">
+      <option name="closed" value="true" />
+      <created>1757666924813</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1757666924813</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Added ffmpeg.exe, ffplay.exe, and ffprobe.exe inside a resource">
+      <option name="closed" value="true" />
+      <created>1757667580505</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1757667580505</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Updated MVC">
+      <option name="closed" value="true" />
+      <created>1757668433526</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1757668433526</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Updated MVC">
+      <option name="closed" value="true" />
+      <created>1757668560419</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1757668560419</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Updated MVC">
+      <option name="closed" value="true" />
+      <created>1757668579761</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1757668579761</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Updated MVC">
+      <option name="closed" value="true" />
+      <created>1757668591293</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1757668591293</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Update">
+      <option name="closed" value="true" />
+      <created>1757744182507</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1757744182507</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Uploaded initialized files" />
+    <MESSAGE value="Updated the main-view.fxml and added an image" />
+    <MESSAGE value="Updated the main-view.fxml and modified MainViewController.java" />
+    <MESSAGE value="Nothing" />
+    <MESSAGE value="Updated MainViewController.java" />
+    <MESSAGE value="Updated main-view.fxml" />
+    <MESSAGE value="Updated MainViewController.java&#10;Initialized all of the comboboxes" />
+    <MESSAGE value="Updated MainViewController.java and ReduceMapTaskConverter.java" />
+    <MESSAGE value="Added ffmpeg.exe, ffplay.exe, and ffprobe.exe inside a resource" />
+    <MESSAGE value="Updated MVC" />
+    <MESSAGE value="BIG CHANGE" />
+    <MESSAGE value="Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update" />
+  </component>
+</project>

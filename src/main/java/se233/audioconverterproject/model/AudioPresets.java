@@ -35,7 +35,7 @@ public class AudioPresets {
     ));
 
 
-    // BITRATES // NOTE: WAV FORMAT DOESN'T HAVE BITRATE //
+    // BITRATES // NOTE: WAV and FLAC FORMAT DOESN'T HAVE BITRATE //
     public static Map<String, Integer> bitratesMP3 = new LinkedHashMap<>(Map.ofEntries(
             entry("32 kbps", 32_000),
             entry("40 kbps", 40_000),
