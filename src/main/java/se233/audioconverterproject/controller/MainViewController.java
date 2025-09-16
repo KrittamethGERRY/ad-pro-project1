@@ -11,20 +11,17 @@ import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import se233.audioconverterproject.Launcher;
-import se233.audioconverterproject.model.AudioPresets;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.*;
 
-import static java.util.Map.entry;
 import static se233.audioconverterproject.model.AudioPresets.*;
 
 public class MainViewController {
-    @FXML private ListView inputListView;
+    @FXML private ListView<String> inputListView;
 
     @FXML private Hyperlink Clickable_link;
 
@@ -46,6 +43,9 @@ public class MainViewController {
     @FXML private RadioButton stereoRadio;
     @FXML private ComboBox<String> sampleRateComboBox;
     @FXML private ComboBox<String> bitrateComboBox;
+
+    private Map<String, String> fileMapList = new LinkedHashMap<>();
+
     private ToggleGroup channelsGroup;
     public void initialize(){
         uploadIcon.setImage(new Image(Launcher.class.getResourceAsStream("music-file.png")));
@@ -55,21 +55,17 @@ public class MainViewController {
         this.monoRadio.setToggleGroup(channelsGroup);
         this.stereoRadio.setToggleGroup(channelsGroup);
         stereoRadio.setSelected(true);
-/*        audioQualityComboBox.setDisable(true);
-        bitrateComboBox.setDisable(true);
-        sampleRateComboBox.setDisable(true);*/
 
         // INITIALIZE THE CONVERSION COMBOBOX
         if (audioFormatComboBox.getItems().isEmpty()) {
             audioFormatComboBox.getItems().addAll(formats);
+            setDisableFunction(true);
 
             audioFormatComboBox.setOnAction(event -> {      // WHEN THE CONVERSION FORMAT IS CHANGED, THE QUALITIES ARE GOING TO CHANGE TOO, IN ORDER TO MATCH WITH THE FORMAT TYPE
                 audioQualityComboBox.getItems().clear();
                 sampleRateComboBox.getItems().clear();
                 bitrateComboBox.getItems().clear();
-/*               audioQualityComboBox.setDisable(false);
-                bitrateComboBox.setDisable(false);
-                sampleRateComboBox.setDisable(false);*/
+                setDisableFunction(false);
 
                 String key = audioFormatComboBox.getSelectionModel().getSelectedItem();
                 audioQualityComboBox.setDisable(key.equals("flac"));
@@ -88,17 +84,21 @@ public class MainViewController {
                     default -> null;
                 };
 
+                // Sort bitrate combobox ascendingly
 
-                //      ******SET BITRATE COMBOBOX DISABLED WHEN WAV IS SELECTED
                 if (bitrateMap != null) {
-                    for (String bitrate : bitrateMap.keySet()) {
-                        bitrateComboBox.getItems().add(bitrate);
+                    sortedList = new ArrayList<>(bitrateMap.entrySet());
+                    sortedList.sort(Map.Entry.comparingByValue());
+                    for (Map.Entry<String, Integer> entry : sortedList) {
+                        bitrateComboBox.getItems().add(entry.getKey());
                     }
                     if (!bitrateComboBox.getItems().isEmpty()) {
                         bitrateComboBox.getSelectionModel().select(0);
                     }
+                    bitrateComboBox.setDisable(false);
                 } else {
-
+                    bitrateComboBox.getItems().clear();
+                    bitrateComboBox.setDisable(true);
                 }
 
                 Map<String, Integer> sampleRateMap = switch (key) {
@@ -108,8 +108,13 @@ public class MainViewController {
                     default -> null;
                 };
 
+
                 if (sampleRateMap != null) {
-                    sampleRateComboBox.getItems().addAll(sampleRateMap.keySet());
+                    sortedList = new ArrayList<>(sampleRateMap.entrySet());
+                    sortedList.sort(Map.Entry.comparingByValue());
+                    for (Map.Entry<String, Integer> entry : sortedList) {
+                        sampleRateComboBox.getItems().add(entry.getKey());
+                    }
                     sampleRateComboBox.getSelectionModel().select(0);
                 }
             });
@@ -162,6 +167,7 @@ public class MainViewController {
                 success = true;
                 File file = db.getFiles().get(0);
                 fileName = file.getName();
+                fileMapList.put(fileName, file.getAbsolutePath());
                 inputListView.getItems().add(fileName);
                 uploadIcon.setVisible(false);
             }
@@ -183,6 +189,7 @@ public class MainViewController {
 
             if (selectedFile != null) {
                 inputListView.getItems().add(selectedFile.getName());
+                fileMapList.put(selectedFile.getName(), selectedFile.getAbsolutePath());
                 uploadIcon.setVisible(false);
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -191,13 +198,13 @@ public class MainViewController {
                 alert.setContentText("You didn't choose any file.");
                 alert.showAndWait();
             }
-
         });
 
         RemoveButton.setOnAction(event -> {
             Object selectedItem = inputListView.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
                 inputListView.getItems().remove(selectedItem);
+                fileMapList.remove(selectedItem.toString());
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a file to remove.");
                 alert.showAndWait();
@@ -207,6 +214,8 @@ public class MainViewController {
             }
         });
 
+
+        // Handle Convert Button
         convertBtn.setOnAction(event -> {
             ExecutorService executor = Executors.newFixedThreadPool(4);
             String format = audioFormatComboBox.getSelectionModel().getSelectedItem();
@@ -237,14 +246,28 @@ public class MainViewController {
                 case "m4a" -> bitratesM4A.get(bitrateComboBox.getSelectionModel().getSelectedItem());
                 default -> 0;
             };
-            System.out.println(channel);
-
-            Dialog selectFileDialog = new Dialog();
-            selectFileDialog.setTitle("Select a destination file");
-            selectFileDialog.setHeaderText("Select a destination file");
 
 
-            //FutureTask futureTask = new FutureTask<>(new ConverterTask(format, quality, bitrate, sampleRate, channel, ""));
+            fileMapList.forEach((key, value) -> {
+                FutureTask futureTask = new FutureTask<>(new ConverterTask(format, quality, bitrate, sampleRate, channel, value,"D:/"));
+                ExecutorService executorService = Executors.newFixedThreadPool(4);
+                executorService.execute(futureTask);
+                try {
+                    System.out.println(futureTask.get());
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                } catch (ExecutionException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         });
+    }
+
+    public void setDisableFunction(boolean isDisabled) {
+        audioQualityComboBox.setDisable(isDisabled);
+        bitrateComboBox.setDisable(isDisabled);
+        sampleRateComboBox.setDisable(isDisabled);
+        monoRadio.setDisable(isDisabled);
+        convertBtn.setDisable(isDisabled);
     }
 }

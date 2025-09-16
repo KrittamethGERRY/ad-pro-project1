@@ -23,31 +23,32 @@ public class ConverterTask extends Task implements Callable<String> {
     private int bitrate;
     private int sampleRate;
     private int channel;
-    private String filePath;
+    private String inputPath;
+    private String outputDir;
 
-    public ConverterTask(String format, int quality, int bitrate, int sampleRate, int channel, String filePath) {
+    public ConverterTask(String format, int quality, int bitrate, int sampleRate, int channel, String inputPath, String outputDir) {
         this.format = format;
         this.quality = quality;
         this.bitrate = bitrate;
         this.sampleRate = sampleRate;
         this.channel = channel;
-        this.filePath = filePath;
+        this.inputPath = inputPath;
+        this.outputDir = outputDir;
     }
 
     public String call() throws URISyntaxException, IOException, InterruptedException {
-        Thread.sleep(5000);
+        System.out.println("Starting ConverterTask");
         File ffmpegFile = new File(Launcher.class.getResource("ffmpeg/bin/ffmpeg.exe").toURI());
         File ffprobeFile = new File(Launcher.class.getResource("ffmpeg/bin/ffprobe.exe").toURI());
 
         ffmpeg = new FFmpeg(ffmpegFile.toString());
         ffprobe = new FFprobe(ffprobeFile.toString());
 
-        File inputFile = new File(Launcher.class.getResource("sample-3s.mp3").toURI());
-        System.out.println("Input file: " + inputFile.exists());
+        File inputFile = new File(inputPath);
 
         FFmpegBuilder builder = new FFmpegBuilder()
                 .setInput(inputFile.toString())
-                .addOutput(filePath)
+                .addOutput(outputDir + inputFile.getName() + "." + format)
                 .setFormat(format)
                 .setAudioSampleRate(sampleRate)
                 .setAudioQuality(quality)
@@ -57,6 +58,7 @@ public class ConverterTask extends Task implements Callable<String> {
 
         FFmpegExecutor executor = new FFmpegExecutor(ffmpeg, ffprobe);
         executor.createJob(builder).run();
+
         System.out.println("AUDIO CONVERTED!");
         return "Audio created at " ;
     }
