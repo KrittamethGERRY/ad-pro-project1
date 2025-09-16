@@ -70,7 +70,7 @@ public class MainViewController {
                 String key = audioFormatComboBox.getSelectionModel().getSelectedItem();
                 audioQualityComboBox.setDisable(key.equals("flac"));
 
-                List<Map.Entry<String, Integer>> sortedList = new ArrayList<>(presets.get(key).entrySet());
+                List<Map.Entry<String, Integer>> sortedList = new ArrayList<>(presets.get(audioFormatComboBox.getSelectionModel().getSelectedItem()).entrySet());
                 sortedList.sort(Map.Entry.comparingByValue());
 
                 for (Map.Entry<String, Integer> entry : sortedList) {
@@ -128,7 +128,7 @@ public class MainViewController {
         // ALL EVENT HANDLERS
         dropRegion.setOnDragOver(event -> {
             Dragboard db = event.getDragboard();
-            //final boolean isAccepted = db.getFiles().get(0).getName().toLowerCase().endsWith("mp4");
+            //final boolean isAccepted = db.getFiles().get(0).getName().toLowerCase().endsWith("m4a");
                 if (db.hasFiles()) {
                     event.acceptTransferModes(TransferMode.COPY);
                 }
@@ -214,52 +214,52 @@ public class MainViewController {
             }
         });
 
-
         // Handle Convert Button
-        convertBtn.setOnAction(event -> {
-            ExecutorService executor = Executors.newFixedThreadPool(4);
-            String format = audioFormatComboBox.getSelectionModel().getSelectedItem();
-            int quality = presets.get(format).get(audioQualityComboBox.getSelectionModel().getSelectedItem());
-            int bitrate;
-            int sampleRate = switch (format) {
-                case "mp3" -> sampleRatesMP3.get(sampleRateComboBox.getSelectionModel().getSelectedItem());
-                case "wav" -> sampleRatesWAV.get(sampleRateComboBox.getSelectionModel().getSelectedItem());
-                case "m4a", "flac" -> sampleRatesM4A_FLAC.get(sampleRateComboBox.getSelectionModel().getSelectedItem());
-                default -> {
-                    try {
-                        throw new IOException("");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+
+            convertBtn.setOnAction(event -> {
+                if (!(inputListView.getItems().size() == 0)) {
+
+                    String format = audioFormatComboBox.getSelectionModel().getSelectedItem();
+                    int quality;
+                    if (!format.equals("flac")) {
+                        quality = presets.get(format).get(audioQualityComboBox.getSelectionModel().getSelectedItem());
+                    } else {
+                        quality = 0;
                     }
-                }
-            };
+                    int bitrate;
+                    int sampleRate = switch (format) {
+                        case "mp3" -> sampleRatesMP3.get(sampleRateComboBox.getSelectionModel().getSelectedItem());
+                        case "wav" -> sampleRatesWAV.get(sampleRateComboBox.getSelectionModel().getSelectedItem());
+                        case "m4a", "flac" ->
+                                sampleRatesM4A_FLAC.get(sampleRateComboBox.getSelectionModel().getSelectedItem());
+                        default -> { throw new IllegalStateException("Invalid format: " + format); }
+                    };
 
-            System.out.println(sampleRate);
-            short channel;
-            if (monoRadio.isSelected()) {
-                channel = 1;
-            } else {
-                channel = 2;
-            }
-            bitrate = switch (format) {
-                case "mp3" -> bitratesMP3.get(bitrateComboBox.getSelectionModel().getSelectedItem());
-                case "m4a" -> bitratesM4A.get(bitrateComboBox.getSelectionModel().getSelectedItem());
-                default -> 0;
-            };
+                    short channel;
+                    if (monoRadio.isSelected()) {
+                        channel = 1;
+                    } else {
+                        channel = 2;
+                    }
+                    bitrate = switch (format) {
+                        case "mp3" -> bitratesMP3.get(bitrateComboBox.getSelectionModel().getSelectedItem());
+                        case "m4a" -> bitratesM4A.get(bitrateComboBox.getSelectionModel().getSelectedItem());
+                        default -> 0;
+                    };
 
+                    fileMapList.forEach((key, value) -> {
+                        ConverterTask task = new ConverterTask(format, quality, bitrate, sampleRate, channel, value, "D:/");
+                        Thread thread = new Thread(task);
+                        thread.setDaemon(true);
+                        thread.start();
+                    });
 
-            fileMapList.forEach((key, value) -> {
-                FutureTask futureTask = new FutureTask<>(new ConverterTask(format, quality, bitrate, sampleRate, channel, value,"D:/"));
-                ExecutorService executorService = Executors.newFixedThreadPool(4);
-                executorService.execute(futureTask);
-                try {
-                    System.out.println(futureTask.get());
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                } catch (ExecutionException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Please insert a file to convert.");
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.showAndWait();
+             }
         });
     }
 

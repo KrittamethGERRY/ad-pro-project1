@@ -1,5 +1,8 @@
 package se233.audioconverterproject.model;
 
+import net.bramp.ffmpeg.builder.FFmpegBuilder;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -106,4 +109,65 @@ public class AudioPresets {
             entry("44100 kHz", 44_100),
             entry("48000 kHz", 48_000)
     ));
+
+    public static FFmpegBuilder convertToMP3(int quality, int bitrate, int sampleRate, int channel, String inputPath, String outputDir) {
+        File inputFile = new File(inputPath);
+        FFmpegBuilder builder = new FFmpegBuilder()
+                .setInput(inputPath)
+                .addOutput(outputDir + inputFile.getName().substring(0, inputFile.getName().lastIndexOf("."))+ ".mp3")
+                .setFormat("mp3")
+                .setAudioCodec("libmp3lame")
+                .setAudioSampleRate(sampleRate)
+                .setAudioQuality(quality)
+                .setAudioChannels(channel)
+                .setAudioBitRate(bitrate)
+                .done();
+
+        return builder;
+    }
+
+    public static FFmpegBuilder convertToWAV(int quality, int sampleRate, int channel, String inputPath, String outputDir) {
+        File inputFile = new File(inputPath);
+        FFmpegBuilder builder = new FFmpegBuilder()
+                .setInput(inputPath)
+                .addOutput(outputDir + inputFile.getName().substring(0, inputFile.getName().lastIndexOf("."))+ ".wav")
+                .setFormat("wav")
+                .setAudioSampleRate(sampleRate)
+                .setAudioQuality(quality)
+                .setAudioChannels(channel)
+                .done();
+
+        return builder;
+    }
+
+    public static FFmpegBuilder convertToFLAC(int sampleRate, int channel, String inputPath, String outputDir) {
+        File inputFile = new File(inputPath);
+        FFmpegBuilder builder = new FFmpegBuilder()
+                .setInput(inputPath)
+                .addOutput(outputDir + inputFile.getName().substring(0, inputFile.getName().lastIndexOf(".")) + ".flac")
+                .setFormat("flac")
+                .setAudioCodec("flac")
+                .setAudioSampleRate(sampleRate)
+                .setAudioChannels(channel)
+                .done();
+
+        return builder;
+    }
+
+    public static FFmpegBuilder convertToM4A(int quality, int bitrate, int sampleRate, int channel, String inputPath, String outputDir) {
+        System.out.println("Converting to m4a");
+        File inputFile = new File(inputPath);
+        FFmpegBuilder builder = new FFmpegBuilder()
+                .setInput(inputPath)
+                .addOutput(outputDir + inputFile.getName().substring(0, inputFile.getName().lastIndexOf(".")) + ".mp4")
+                .setFormat("mp4")
+                .setAudioCodec("aac")
+                .setAudioQuality(quality)
+                .setAudioSampleRate(sampleRate)
+                .setAudioChannels(channel)
+                .setAudioBitRate(bitrate)
+                .done();
+
+        return builder;
+    }
 }

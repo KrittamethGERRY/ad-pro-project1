@@ -6,7 +6,9 @@ import net.bramp.ffmpeg.FFmpeg;
 import net.bramp.ffmpeg.FFmpegExecutor;
 import net.bramp.ffmpeg.FFprobe;
 import net.bramp.ffmpeg.builder.FFmpegBuilder;
+import net.bramp.ffmpeg.job.FFmpegJob;
 import se233.audioconverterproject.Launcher;
+import se233.audioconverterproject.model.AudioPresets;
 
 import javax.sound.sampled.AudioFormat;
 import java.io.File;
@@ -44,22 +46,22 @@ public class ConverterTask extends Task implements Callable<String> {
         ffmpeg = new FFmpeg(ffmpegFile.toString());
         ffprobe = new FFprobe(ffprobeFile.toString());
 
-        File inputFile = new File(inputPath);
+        FFmpegBuilder builder = null;
 
-        FFmpegBuilder builder = new FFmpegBuilder()
-                .setInput(inputFile.toString())
-                .addOutput(outputDir + inputFile.getName() + "." + format)
-                .setFormat(format)
-                .setAudioSampleRate(sampleRate)
-                .setAudioQuality(quality)
-                .setAudioChannels(channel)
-                .setAudioBitRate(bitrate)
-                .done();
+        builder = switch(format) {
+            case "mp3"-> AudioPresets.convertToMP3(quality, bitrate, sampleRate, channel, inputPath, outputDir);
+            case "wav"-> AudioPresets.convertToWAV(quality, sampleRate, channel, inputPath, outputDir);
+            case "flac"-> AudioPresets.convertToFLAC(sampleRate, channel, inputPath, outputDir);
+            case "m4a"-> AudioPresets.convertToM4A(quality, bitrate, sampleRate, channel, inputPath, outputDir);
+            default -> throw new IllegalStateException("Invalid format: " + format);
+        };
 
         FFmpegExecutor executor = new FFmpegExecutor(ffmpeg, ffprobe);
-        executor.createJob(builder).run();
+        FFmpegJob job = executor.createJob(builder.overrideOutputFiles(true), progress -> {
+        });
+        job.run();
 
         System.out.println("AUDIO CONVERTED!");
-        return "Audio created at " ;
+        return "Audio created at ";
+        }
     }
-}
