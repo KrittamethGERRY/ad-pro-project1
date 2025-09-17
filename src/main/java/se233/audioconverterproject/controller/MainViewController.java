@@ -1,6 +1,9 @@
 package se233.audioconverterproject.controller;
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -8,12 +11,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import se233.audioconverterproject.Launcher;
 
-import java.io.File;
-import java.io.IOException;
+import javax.sound.sampled.spi.AudioFileWriter;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.*;
@@ -47,7 +56,6 @@ public class MainViewController {
 
     private ToggleGroup channelsGroup;
     public void initialize(){
-
         uploadIcon.setImage(new Image(Launcher.class.getResourceAsStream("music-file.png")));
 
         // GROUPING RADIO BUTTON TOGETHER
@@ -218,8 +226,12 @@ public class MainViewController {
 
         // Handle Convert Button
             convertBtn.setOnAction(event -> {
-                if (!(inputListView.getItems().size() == 0)) {
-
+                Parent bgRoot = Launcher.primaryStage.getScene().getRoot();
+                if (!inputListView.getItems().isEmpty()) {
+                    ProgressIndicator pi = new  ProgressIndicator();
+                    VBox box = new VBox(pi);
+                    box.setAlignment(Pos.CENTER);
+                    Launcher.primaryStage.getScene().setRoot(box);
                     String format = audioFormatComboBox.getSelectionModel().getSelectedItem();
                     int quality;
                     if (!format.equals("flac")) {
@@ -248,13 +260,50 @@ public class MainViewController {
                         default -> 0;
                     };
 
-                    fileMapList.forEach((key, value) -> {
-                        ConverterTask task = new ConverterTask(format, quality, bitrate, sampleRate, channel, value, "D:/");
-                        Thread thread = new Thread(task);
-                        thread.setDaemon(true);
-                        thread.start();
+                    //      LIST FOR STORING THE CONVERTED AUDIO FILES. NOTE: THIS ARRAY WILL BE USE FOR SAVING THE FILES ON THE SELECTED DIRECTORY
+                    List<String> audioFiles = new ArrayList<>(inputListView.getItems().size());
+                    Task<Void> processTask = new Task<>() {
+                        @Override
+                        protected Void call() throws Exception {
+                            fileMapList.forEach((key, value) -> {
+                                ConverterTask task = new ConverterTask(format, quality, bitrate, sampleRate, channel, value);
+                                ExecutorService executor = Executors.newFixedThreadPool(4);
+                                ExecutorCompletionService<String> completionService = new ExecutorCompletionService<>(executor);
+                                try {
+                                    audioFiles.add(completionService.submit(task).get());
+                                } catch (InterruptedException | ExecutionException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                System.out.println(Arrays.toString(audioFiles.toArray()));
+                            });
+                            return null;
+                        }
+                    };
+                    processTask.setOnSucceeded(e -> {
+                        Launcher.primaryStage.getScene().setRoot(bgRoot);
+                        if (audioFiles.size() == inputListView.getItems().size()) {
+                            DirectoryChooser directoryChooser = new DirectoryChooser();
+                            directoryChooser.setTitle("Select a directory");
+                            File selectedDir = directoryChooser.showDialog(Launcher.primaryStage);
+                            if (selectedDir != null) {
+                                for (String audioFile : audioFiles) {
+                                    try {
+                                        copyAudioFile(audioFile, selectedDir.getAbsolutePath());
+                                    } catch (IOException ex) {
+                                        throw new RuntimeException(ex);
+                                    }
+                                }
+                            }
+                            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                            successAlert.setTitle("Conversion Complete.");
+                            successAlert.setHeaderText(null);
+                            successAlert.setContentText("File saved at '" +  selectedDir + "'.");
+                            successAlert.showAndWait();
+                        }
                     });
-
+                    Thread thread = new Thread(processTask);
+                    thread.setDaemon(true);
+                    thread.start();
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Please insert a file to convert.");
                     alert.setTitle("Error");
@@ -270,5 +319,21 @@ public class MainViewController {
         sampleRateComboBox.setDisable(isDisabled);
         monoRadio.setDisable(isDisabled);
         convertBtn.setDisable(isDisabled);
+    }
+
+    public void copyAudioFile(String source, String target) throws IOException {
+        File sourceFile = new File(source);
+        File targetFile = new File(target + "\\" + sourceFile.getName());
+
+
+        try (FileInputStream fis = new FileInputStream(sourceFile)) {
+            FileOutputStream fos = new FileOutputStream(targetFile);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = fis.read(buffer)) != -1) {
+                fos.write(buffer, 0, length);
+            }
+            fos.close();
+        }
     }
 }

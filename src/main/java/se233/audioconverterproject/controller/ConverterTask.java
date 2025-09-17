@@ -28,18 +28,19 @@ public class ConverterTask extends Task implements Callable<String> {
     private final String inputPath;
     private final String outputDir;
 
-    public ConverterTask(String format, int quality, int bitrate, int sampleRate, int channel, String inputPath, String outputDir) {
+    public ConverterTask(String format, int quality, int bitrate, int sampleRate, int channel, String inputPath) {
         this.format = format;
         this.quality = quality;
         this.bitrate = bitrate;
         this.sampleRate = sampleRate;
         this.channel = channel;
         this.inputPath = inputPath;
-        this.outputDir = outputDir;
+        this.outputDir = System.getProperty("java.io.tmpdir");
     }
 
     public String call() throws URISyntaxException, IOException, InterruptedException {
         System.out.println("Starting ConverterTask");
+        File inputFile = new File(inputPath);
         File ffmpegFile = new File(Launcher.class.getResource("ffmpeg/bin/ffmpeg.exe").toURI());
         File ffprobeFile = new File(Launcher.class.getResource("ffmpeg/bin/ffprobe.exe").toURI());
 
@@ -56,13 +57,12 @@ public class ConverterTask extends Task implements Callable<String> {
             default -> throw new IllegalStateException("Invalid format: " + format);
         };
 
+
         FFmpegExecutor executor = new FFmpegExecutor(ffmpeg, ffprobe);
-        FFmpegJob job = executor.createJob(builder.overrideOutputFiles(true), progress -> {
-            //MainViewController.progressBar.setProgress(progress.speed);
-        });
+        FFmpegJob job = executor.createJob(builder.overrideOutputFiles(true));
         job.run();
 
         System.out.println("AUDIO CONVERTED!");
-        return "Audio created at ";
+        return outputDir + inputFile.getName().substring(0, inputFile.getName().lastIndexOf(".")) + "." + format;
         }
     }

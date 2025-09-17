@@ -4,6 +4,6 @@
     src: url("fonts/OpenSans-VariableFont_wdth,wght.ttf")
 }
 
-vbox {
+root {
     -fx-background-color: black;
 }

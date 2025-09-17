@@ -18,10 +18,10 @@ public class Launcher extends Application {
         stage.setTitle("Audio File Converter");
         FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("main-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        scene.setRoot(fxmlLoader.getRoot());
-        scene.getStylesheets().add(Launcher.class.getResource("Styles/index.css").toExternalForm());
-        stage.setScene(scene);
-        stage.show();
+        String css = Launcher.class.getResource("Styles/index.css").toExternalForm();
+        scene.getStylesheets().add(css);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
 }
