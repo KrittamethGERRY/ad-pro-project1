@@ -38,12 +38,7 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -55,51 +50,12 @@
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="se233.audioconverterproject.controller.MainViewController">
   <children>
-    <MenuBar prefWidth="640.0" VBox.vgrow="NEVER">
-      <menus>
-        <Menu mnemonicParsing="false" text="File">
-          <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
       <AnchorPane prefHeight="400.0" prefWidth="640.0">
          <children>
-            <Pane layoutX="35.0" layoutY="41.0" prefHeight="256.0" prefWidth="256.0">
+            <Pane layoutX="39.0" layoutY="72.0" prefHeight="256.0" prefWidth="256.0">
                <children>
                   <Region fx:id="dropRegion" prefHeight="256.0" prefWidth="256.0" style="-fx-background-color: lightgray;" />
-                  <ListView fx:id="inputListView" layoutX="9.0" prefHeight="168.0" prefWidth="239.0" style="-fx-background-color: lightgray;" />
+                  <ListView fx:id="inputListView" prefHeight="256.0" prefWidth="256.0" style="-fx-background-color: lightgray;" />
                   <ImageView fx:id="uploadIcon" fitHeight="128.0" fitWidth="128.0" layoutX="69.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.2; -fx-blend-mode: multiply;">
                      <image>
                         <Image url="https://placehold.co/400" />
@@ -110,7 +66,7 @@
                   <Label layoutX="121.0" layoutY="200.0" text="or" />
                </children>
             </Pane>
-            <Button fx:id="convertBtn" alignment="CENTER" layoutX="336.0" layoutY="247.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="256.0" text="Convert" textAlignment="CENTER">
+            <Button fx:id="convertBtn" alignment="CENTER" layoutX="336.0" layoutY="242.0" mnemonicParsing="false" prefHeight="86.0" prefWidth="256.0" text="Convert" textAlignment="CENTER">
                <font>
                   <Font name="Arial Bold" size="24.0" />
                </font>
@@ -118,7 +74,7 @@
                   <Insets bottom="5.0" top="5.0" />
                </padding>
             </Button>
-            <Pane layoutX="336.0" layoutY="41.0" prefHeight="48.0" prefWidth="256.0">
+            <Pane layoutX="336.0" layoutY="56.0" prefHeight="48.0" prefWidth="256.0">
                <children>
                   <Label layoutX="2.0" text="Convert to" />
                   <ComboBox fx:id="audioFormatComboBox" layoutY="18.0" prefHeight="32.0" prefWidth="72.0" />
@@ -126,7 +82,7 @@
                   <ComboBox fx:id="audioQualityComboBox" layoutX="96.0" layoutY="16.0" prefHeight="32.0" prefWidth="160.0" />
                </children>
             </Pane>
-            <BorderPane layoutX="336.0" layoutY="105.0" prefHeight="128.0" prefWidth="256.0">
+            <BorderPane layoutX="336.0" layoutY="120.0" prefHeight="128.0" prefWidth="256.0">
                <top>
                   <Label prefWidth="121.0" text="Advanced settings" BorderPane.alignment="CENTER">
                      <font>
@@ -155,8 +111,7 @@
                   </VBox>
                </right>
             </BorderPane>
-            <ProgressBar fx:id="progressBar" layoutX="35.0" layoutY="317.0" prefHeight="32.0" prefWidth="558.0" progress="0.0" />
-            <Button fx:id="RemoveButton" layoutX="137.0" layoutY="14.0" mnemonicParsing="false" text="Remove" />
+            <Button fx:id="RemoveButton" layoutX="138.0" layoutY="328.0" mnemonicParsing="false" text="Remove" />
          </children>
       </AnchorPane>
   </children>

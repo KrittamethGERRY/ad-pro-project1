@@ -1,0 +1,9 @@
+
+@font-face {
+    -fx-font-family: "Open Sans", sans-serif;
+    src: url("fonts/OpenSans-VariableFont_wdth,wght.ttf")
+}
+
+vbox {
+    -fx-background-color: black;
+}

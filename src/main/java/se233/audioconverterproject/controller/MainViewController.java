@@ -35,7 +35,6 @@ public class MainViewController {
 
     @FXML private ComboBox<String> audioQualityComboBox;
 
-    @FXML private ProgressBar progressBar;
     
     @FXML private ImageView uploadIcon;
 
@@ -48,6 +47,7 @@ public class MainViewController {
 
     private ToggleGroup channelsGroup;
     public void initialize(){
+
         uploadIcon.setImage(new Image(Launcher.class.getResourceAsStream("music-file.png")));
 
         // GROUPING RADIO BUTTON TOGETHER
@@ -68,7 +68,7 @@ public class MainViewController {
                 setDisableFunction(false);
 
                 String key = audioFormatComboBox.getSelectionModel().getSelectedItem();
-                audioQualityComboBox.setDisable(key.equals("flac"));
+                audioQualityComboBox.setDisable(key.equals("flac") || key.equals("m4a") ||  key.equals("mp3"));
 
                 List<Map.Entry<String, Integer>> sortedList = new ArrayList<>(presets.get(audioFormatComboBox.getSelectionModel().getSelectedItem()).entrySet());
                 sortedList.sort(Map.Entry.comparingByValue());
@@ -123,7 +123,6 @@ public class MainViewController {
             System.out.println("audioFormatComboBox already populated");
         }
         // END OF COMBOBOX EVENT HANDLER /////////////////////////////////////////////////////////////////////
-
 
         // ALL EVENT HANDLERS
         dropRegion.setOnDragOver(event -> {
@@ -180,17 +179,19 @@ public class MainViewController {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Select a file");
 
-            fileChooser.getExtensionFilters().add(
-                    new FileChooser.ExtensionFilter("All Files", "*.*")
-            );
+            FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Audio Formats", "*.mp3*", "*.wav*", "*.flac*", "*.m4a*");
+            fileChooser.getExtensionFilters().add(filter);
 
             Stage stage = (Stage) Clickable_link.getScene().getWindow();
-            File selectedFile = fileChooser.showOpenDialog(stage);
+            List<File> selectedFile = fileChooser.showOpenMultipleDialog(stage);
 
             if (selectedFile != null) {
-                inputListView.getItems().add(selectedFile.getName());
-                fileMapList.put(selectedFile.getName(), selectedFile.getAbsolutePath());
-                uploadIcon.setVisible(false);
+                for (File file : selectedFile) {
+                    inputListView.getItems().add(file.getName());
+                    fileMapList.put(file.getName(), file.getAbsolutePath());
+                    uploadIcon.setVisible(false);
+                }
+
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("No File Selected");
@@ -200,6 +201,7 @@ public class MainViewController {
             }
         });
 
+        // Remove element in ListView
         RemoveButton.setOnAction(event -> {
             Object selectedItem = inputListView.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
@@ -215,7 +217,6 @@ public class MainViewController {
         });
 
         // Handle Convert Button
-
             convertBtn.setOnAction(event -> {
                 if (!(inputListView.getItems().size() == 0)) {
 

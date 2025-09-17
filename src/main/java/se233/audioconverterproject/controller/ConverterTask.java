@@ -18,15 +18,15 @@ import java.util.concurrent.Callable;
 
 public class ConverterTask extends Task implements Callable<String> {
 
-    private static FFmpeg ffmpeg;
-    private static FFprobe ffprobe;
-    private String format;
-    private int quality;
-    private int bitrate;
-    private int sampleRate;
-    private int channel;
-    private String inputPath;
-    private String outputDir;
+    private FFmpeg ffmpeg;
+    private FFprobe ffprobe;
+    private final String format;
+    private final int quality;
+    private final int bitrate;
+    private final int sampleRate;
+    private final int channel;
+    private final String inputPath;
+    private final String outputDir;
 
     public ConverterTask(String format, int quality, int bitrate, int sampleRate, int channel, String inputPath, String outputDir) {
         this.format = format;
@@ -52,12 +52,13 @@ public class ConverterTask extends Task implements Callable<String> {
             case "mp3"-> AudioPresets.convertToMP3(quality, bitrate, sampleRate, channel, inputPath, outputDir);
             case "wav"-> AudioPresets.convertToWAV(quality, sampleRate, channel, inputPath, outputDir);
             case "flac"-> AudioPresets.convertToFLAC(sampleRate, channel, inputPath, outputDir);
-            case "m4a"-> AudioPresets.convertToM4A(quality, bitrate, sampleRate, channel, inputPath, outputDir);
+            case "m4a"-> AudioPresets.convertToM4A(bitrate, sampleRate, channel, inputPath, outputDir);
             default -> throw new IllegalStateException("Invalid format: " + format);
         };
 
         FFmpegExecutor executor = new FFmpegExecutor(ffmpeg, ffprobe);
         FFmpegJob job = executor.createJob(builder.overrideOutputFiles(true), progress -> {
+            //MainViewController.progressBar.setProgress(progress.speed);
         });
         job.run();
 

@@ -120,7 +120,6 @@ public class AudioPresets {
                 .setAudioSampleRate(sampleRate)
                 .setAudioQuality(quality)
                 .setAudioChannels(channel)
-                .setAudioBitRate(bitrate)
                 .done();
 
         return builder;
@@ -154,15 +153,14 @@ public class AudioPresets {
         return builder;
     }
 
-    public static FFmpegBuilder convertToM4A(int quality, int bitrate, int sampleRate, int channel, String inputPath, String outputDir) {
+    public static FFmpegBuilder convertToM4A(int bitrate, int sampleRate, int channel, String inputPath, String outputDir) {
         System.out.println("Converting to m4a");
         File inputFile = new File(inputPath);
         FFmpegBuilder builder = new FFmpegBuilder()
                 .setInput(inputPath)
-                .addOutput(outputDir + inputFile.getName().substring(0, inputFile.getName().lastIndexOf(".")) + ".mp4")
+                .addOutput(outputDir + inputFile.getName().substring(0, inputFile.getName().lastIndexOf(".")) + ".m4a")
                 .setFormat("mp4")
                 .setAudioCodec("aac")
-                .setAudioQuality(quality)
                 .setAudioSampleRate(sampleRate)
                 .setAudioChannels(channel)
                 .setAudioBitRate(bitrate)
