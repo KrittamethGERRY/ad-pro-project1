@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Launcher extends Application {
     public static Stage primaryStage;
@@ -21,7 +22,8 @@ public class Launcher extends Application {
         String css = Launcher.class.getResource("Styles/index.css").toExternalForm();
         scene.getStylesheets().add(css);
         primaryStage.setScene(scene);
+        primaryStage.initStyle(StageStyle.DECORATED);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
-
 }

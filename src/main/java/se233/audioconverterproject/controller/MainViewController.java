@@ -17,15 +17,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import se233.audioconverterproject.Launcher;
 
-import javax.sound.sampled.spi.AudioFileWriter;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static se233.audioconverterproject.model.AudioPresets.*;
 
@@ -36,7 +32,8 @@ public class MainViewController {
 
     @FXML private Region dropRegion;
 
-    @FXML private Button RemoveButton;
+    @FXML private Button editButton;
+    @FXML private Button doneButton;
 
     @FXML private Button convertBtn;
 
@@ -57,12 +54,12 @@ public class MainViewController {
     private ToggleGroup channelsGroup;
     public void initialize(){
         uploadIcon.setImage(new Image(Launcher.class.getResourceAsStream("music-file.png")));
-
         // GROUPING RADIO BUTTON TOGETHER
         channelsGroup = new ToggleGroup();
         this.monoRadio.setToggleGroup(channelsGroup);
         this.stereoRadio.setToggleGroup(channelsGroup);
         stereoRadio.setSelected(true);
+        editButton.setDisable(true);
 
         // INITIALIZE THE CONVERSION COMBOBOX
         if (audioFormatComboBox.getItems().isEmpty()) {
@@ -116,7 +113,6 @@ public class MainViewController {
                     default -> null;
                 };
 
-
                 if (sampleRateMap != null) {
                     sortedList = new ArrayList<>(sampleRateMap.entrySet());
                     sortedList.sort(Map.Entry.comparingByValue());
@@ -133,7 +129,7 @@ public class MainViewController {
         // END OF COMBOBOX EVENT HANDLER /////////////////////////////////////////////////////////////////////
 
         // ALL EVENT HANDLERS
-        dropRegion.setOnDragOver(event -> {
+        inputListView.setOnDragOver(event -> {
             Dragboard db = event.getDragboard();
             //final boolean isAccepted = db.getFiles().get(0).getName().toLowerCase().endsWith("m4a");
                 if (db.hasFiles()) {
@@ -142,9 +138,9 @@ public class MainViewController {
                 event.consume();
         });
 
-        dropRegion.setOnDragEntered(event -> {
+        inputListView.setOnDragEntered(event -> {
             if (event.getDragboard().hasFiles()) {
-                dropRegion.setStyle(
+                inputListView.setStyle(
                         "-fx-border-color: #3498db; " +
                                 "-fx-border-width: 2px; " +
                                 "-fx-border-style: solid; " +
@@ -155,8 +151,8 @@ public class MainViewController {
             }
         });
 
-        dropRegion.setOnDragExited(event -> {
-            dropRegion.setStyle(
+        inputListView.setOnDragExited(event -> {
+            inputListView.setStyle(
                     "-fx-border-color: #aaaaaa; " +
                             "-fx-border-width: 2px; " +
                             "-fx-border-style: dashed; " +
@@ -166,7 +162,7 @@ public class MainViewController {
             );
         });
 
-        dropRegion.setOnDragDropped(event -> {
+        inputListView.setOnDragDropped(event -> {
             Dragboard db = event.getDragboard();
             boolean success = false;
             String fileName;
@@ -176,7 +172,6 @@ public class MainViewController {
                 fileName = file.getName();
                 fileMapList.put(fileName, file.getAbsolutePath());
                 inputListView.getItems().add(fileName);
-                uploadIcon.setVisible(false);
             }
 
             event.setDropCompleted(success);
@@ -197,7 +192,6 @@ public class MainViewController {
                 for (File file : selectedFile) {
                     inputListView.getItems().add(file.getName());
                     fileMapList.put(file.getName(), file.getAbsolutePath());
-                    uploadIcon.setVisible(false);
                 }
 
             } else {
@@ -209,18 +203,28 @@ public class MainViewController {
             }
         });
 
+
         // Remove element in ListView
-        RemoveButton.setOnAction(event -> {
-            Object selectedItem = inputListView.getSelectionModel().getSelectedItem();
-            if (selectedItem != null) {
-                inputListView.getItems().remove(selectedItem);
-                fileMapList.remove(selectedItem.toString());
-            } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a file to remove.");
-                alert.showAndWait();
-            }
-            if (inputListView.getItems().size() == 0) {
-                uploadIcon.setVisible(true);
+        doneButton.setDisable(true);
+        AtomicBoolean isEditing = new AtomicBoolean(false);
+        editButton.setOnAction(event -> {
+            isEditing.set(true);
+            editButton.setDisable(true);
+            doneButton.setDisable(false);
+        });
+
+        doneButton.setOnAction(event -> {
+            isEditing.set(false);
+            doneButton.setDisable(true);
+            editButton.setDisable(false);
+        });
+
+        inputListView.setOnMouseClicked(event -> {
+            if (isEditing.get()) {
+                Object audioToRemove = inputListView.getSelectionModel().getSelectedItem();
+                inputListView.getItems().remove(audioToRemove);
+                fileMapList.remove(audioToRemove);
+                System.out.println(fileMapList.size());
             }
         });
 
@@ -293,12 +297,12 @@ public class MainViewController {
                                         throw new RuntimeException(ex);
                                     }
                                 }
+                                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                                successAlert.setTitle("Conversion Complete.");
+                                successAlert.setHeaderText(null);
+                                successAlert.setContentText("File saved at '" +  selectedDir + "'.");
+                                successAlert.showAndWait();
                             }
-                            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-                            successAlert.setTitle("Conversion Complete.");
-                            successAlert.setHeaderText(null);
-                            successAlert.setContentText("File saved at '" +  selectedDir + "'.");
-                            successAlert.showAndWait();
                         }
                     });
                     Thread thread = new Thread(processTask);
@@ -324,7 +328,6 @@ public class MainViewController {
     public void copyAudioFile(String source, String target) throws IOException {
         File sourceFile = new File(source);
         File targetFile = new File(target + "\\" + sourceFile.getName());
-
 
         try (FileInputStream fis = new FileInputStream(sourceFile)) {
             FileOutputStream fos = new FileOutputStream(targetFile);

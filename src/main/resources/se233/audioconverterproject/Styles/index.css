@@ -1,9 +1,6 @@
 
-@font-face {
-    -fx-font-family: "Open Sans", sans-serif;
-    src: url("fonts/OpenSans-VariableFont_wdth,wght.ttf")
+
+.root {
+    font-family: sans-serif;
 }
 
-root {
-    -fx-background-color: black;
-}
