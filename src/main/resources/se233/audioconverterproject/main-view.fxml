@@ -39,12 +39,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -52,21 +52,20 @@
   <children>
       <AnchorPane prefHeight="400.0" prefWidth="640.0" style="-fx-border-radius: 0;">
          <children>
-            <Pane layoutX="39.0" layoutY="72.0" prefHeight="256.0" prefWidth="256.0">
+            <Pane layoutX="39.0" layoutY="88.0" prefHeight="256.0" prefWidth="256.0">
                <children>
-                  <Region fx:id="dropRegion" prefHeight="256.0" prefWidth="256.0" style="-fx-background-color: lightgray;" />
-                  <ListView fx:id="inputListView" maxHeight="256.0" maxWidth="256.0" prefHeight="256.0" prefWidth="256.0" style="-fx-background-color: lightgray;" />
+                  <ListView fx:id="inputListView" maxHeight="256.0" maxWidth="256.0" prefHeight="256.0" prefWidth="256.0" />
                   <ImageView fx:id="uploadIcon" fitHeight="128.0" fitWidth="128.0" layoutX="69.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.2; -fx-blend-mode: multiply;">
                      <image>
                         <Image url="https://placehold.co/400" />
                      </image>
                   </ImageView>
-                  <Hyperlink fx:id="Clickable_link" layoutX="27.0" layoutY="216.0" text="Click here to browse file from device" />
+                  <Hyperlink fx:id="hyperLink" layoutX="27.0" layoutY="216.0" text="Click here to browse file from device" />
                   <Label fx:id="AudioLebel" layoutX="76.0" layoutY="180.0" text="Drag audio file here" />
                   <Label layoutX="121.0" layoutY="200.0" text="or" />
                </children>
             </Pane>
-            <Button fx:id="convertBtn" alignment="CENTER" layoutX="336.0" layoutY="242.0" mnemonicParsing="false" prefHeight="86.0" prefWidth="256.0" text="Convert" textAlignment="CENTER">
+            <Button fx:id="convertBtn" alignment="CENTER" layoutX="336.0" layoutY="258.0" mnemonicParsing="false" prefHeight="86.0" prefWidth="256.0" text="Convert" textAlignment="CENTER">
                <font>
                   <Font name="Arial Bold" size="24.0" />
                </font>
@@ -74,7 +73,7 @@
                   <Insets bottom="5.0" top="5.0" />
                </padding>
             </Button>
-            <Pane layoutX="336.0" layoutY="56.0" prefHeight="48.0" prefWidth="256.0">
+            <Pane layoutX="336.0" layoutY="72.0" prefHeight="48.0" prefWidth="256.0">
                <children>
                   <Label layoutX="2.0" text="Convert to" />
                   <ComboBox fx:id="audioFormatComboBox" layoutY="18.0" prefHeight="32.0" prefWidth="72.0" />
@@ -82,7 +81,7 @@
                   <ComboBox fx:id="audioQualityComboBox" layoutX="96.0" layoutY="16.0" prefHeight="32.0" prefWidth="160.0" />
                </children>
             </Pane>
-            <BorderPane layoutX="336.0" layoutY="120.0" prefHeight="128.0" prefWidth="256.0">
+            <BorderPane layoutX="336.0" layoutY="136.0" prefHeight="128.0" prefWidth="256.0">
                <top>
                   <Label prefWidth="121.0" text="Advanced settings" BorderPane.alignment="CENTER">
                      <font>
@@ -111,8 +110,8 @@
                   </VBox>
                </right>
             </BorderPane>
-            <Button fx:id="editButton" layoutX="258.0" layoutY="47.0" mnemonicParsing="false" text="Edit" />
-            <Button fx:id="doneButton" layoutX="213.0" layoutY="47.0" mnemonicParsing="false" text="Done" />
+            <Button fx:id="editButton" layoutX="239.0" layoutY="60.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="Edit" />
+            <ToggleButton fx:id="themeToggleBtn" layoutX="528.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Light" />
          </children>
       </AnchorPane>
   </children>
