@@ -9,6 +9,7 @@ import net.bramp.ffmpeg.builder.FFmpegBuilder;
 import net.bramp.ffmpeg.job.FFmpegJob;
 import se233.audioconverterproject.Launcher;
 import se233.audioconverterproject.model.AudioPresets;
+import se233.audioconverterproject.model.exception.ConversionFailedException;
 
 import javax.sound.sampled.AudioFormat;
 import java.io.File;
@@ -38,7 +39,7 @@ public class ConverterTask extends Task implements Callable<String> {
         this.outputDir = System.getProperty("java.io.tmpdir");
     }
 
-    public String call() throws URISyntaxException, IOException, InterruptedException {
+    public String call() throws ConversionFailedException, URISyntaxException, IOException {
         System.out.println("Starting ConverterTask");
         File inputFile = new File(inputPath);
         File ffmpegFile = new File(Launcher.class.getResource("ffmpeg/bin/ffmpeg.exe").toURI());

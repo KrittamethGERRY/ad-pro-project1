@@ -15,13 +15,18 @@ import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import se233.audioconverterproject.Launcher;
+import se233.audioconverterproject.model.exception.ConversionFailedException;
 
+import java.awt.Desktop;
 import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+
 
 import static se233.audioconverterproject.model.AudioPresets.*;
 
@@ -174,17 +179,22 @@ public class MainViewController {
 				success = true;
 				File file = db.getFiles().get(0);
 				fileName = file.getName();
-				if (!fileName.substring(fileName.lastIndexOf('.')).matches(".mp3|.wav|.flac|.m4a")) {
-					// ALERT WHEN INPUT INVALID FILE FORMAT
-					Alert alert = new Alert(AlertType.WARNING);
-					alert.setTitle("WARNING");
-					alert.setHeaderText("WARNING: Invalid format");
-					alert.setContentText("Invalid audio file format (should an audio format: .mp3, .wav, .flac, .m4a)");
-					alert.showAndWait();
-				} else {
-					fileMapList.put(fileName, file.getAbsolutePath());
-					inputListView.getItems().add(fileName);
-					editButton.setDisable(false);
+				try {
+					if (!fileName.substring(fileName.lastIndexOf('.')).matches(".mp3|.wav|.flac|.m4a")) {
+						// ALERT WHEN INPUT INVALID FILE FORMAT
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setTitle("WARNING");
+						alert.setHeaderText("WARNING: Invalid format");
+						alert.setContentText("Invalid audio file format (should an audio format: .mp3, .wav, .flac, .m4a)");
+						alert.showAndWait();
+						throw new InvalidFileFormatException("Invalid file format", new IOException());
+					} else {
+						fileMapList.put(fileName, file.getAbsolutePath());
+						inputListView.getItems().add(fileName);
+						editButton.setDisable(false);
+					}
+				} catch (InvalidFileFormatException e) {
+					e.printStackTrace();
 				}
 
 			}
@@ -238,10 +248,36 @@ public class MainViewController {
 			}
 		});
 		inputListView.setOnMouseClicked(event -> {
+			Object selectedAudio = inputListView.getSelectionModel().getSelectedItem();
 			if (isEditing.get()) {
-				Object audioToRemove = inputListView.getSelectionModel().getSelectedItem();
-				inputListView.getItems().remove(audioToRemove);
-				fileMapList.remove(audioToRemove);
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setContentText("Are you sure to remove the audio from the list?");
+				alert.setHeaderText(null);
+				alert.showAndWait();
+				if (alert.getResult() == ButtonType.OK) {
+					inputListView.getItems().remove(selectedAudio);
+					fileMapList.remove(selectedAudio);
+					
+					if (inputListView.getItems().isEmpty()) {
+						editButton.setDisable(true);
+						isEditing.set(false);
+						editButton.setText("Edit");
+						editButton.setStyle("-fx-font-weight: normal");
+					}
+				}
+			} else if (!isEditing.get() && !inputListView.getItems().isEmpty() && selectedAudio != null){
+				File audioFile = new File(fileMapList.get(selectedAudio));
+	            if (audioFile != null) {
+	                try {
+	                    if (Desktop.isDesktopSupported()) {
+	                        Desktop.getDesktop().open(audioFile); // Opens with the OS default app
+	                    } else {
+	                        System.err.println("Desktop API is not supported.");
+	                    }
+	                } catch (Exception ex) {
+	                    ex.printStackTrace();
+	                }
+	            }
 			}
 
 		});
@@ -289,7 +325,7 @@ public class MainViewController {
 				List<String> audioFiles = new ArrayList<>(inputListView.getItems().size());
 				Task<Void> processTask = new Task<>() {
 					@Override
-					protected Void call() throws Exception {
+					protected Void call() throws ConversionFailedException {
 						fileMapList.forEach((key, value) -> {
 							ConverterTask task = new ConverterTask(format, quality, bitrate, sampleRate, channel,
 									value);
@@ -299,7 +335,7 @@ public class MainViewController {
 							try {
 								audioFiles.add(completionService.submit(task).get());
 							} catch (InterruptedException | ExecutionException e) {
-								throw new RuntimeException(e);
+								throw new ConversionFailedException(e.getMessage());
 							}
 							System.out.println(Arrays.toString(audioFiles.toArray()));
 						});
