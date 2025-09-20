@@ -19,6 +19,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import se233.audioconverterproject.Launcher;
 import se233.audioconverterproject.model.exception.ConversionFailedException;
+import se233.audioconverterproject.model.exception.InvalidFileFormatException;
 
 import java.awt.Desktop;
 import java.io.*;
