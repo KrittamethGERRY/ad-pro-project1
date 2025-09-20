@@ -270,7 +270,7 @@ public class MainViewController {
 	            if (audioFile != null) {
 	                try {
 	                    if (Desktop.isDesktopSupported()) {
-	                        Desktop.getDesktop().open(audioFile); // Opens with the OS default app
+	                        Desktop.getDesktop().open(audioFile);
 	                    } else {
 	                        System.err.println("Desktop API is not supported.");
 	                    }
