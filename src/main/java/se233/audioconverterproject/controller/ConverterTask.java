@@ -54,7 +54,7 @@ public class ConverterTask extends Task implements Callable<String> {
             case "mp3"-> AudioPresets.convertToMP3(quality, bitrate, sampleRate, channel, inputPath, outputDir);
             case "wav"-> AudioPresets.convertToWAV(quality, sampleRate, channel, inputPath, outputDir);
             case "flac"-> AudioPresets.convertToFLAC(sampleRate, channel, inputPath, outputDir);
-            case "m4a"-> AudioPresets.convertToM4A(bitrate, sampleRate, channel, inputPath, outputDir);
+            case "m4a"-> AudioPresets.convertToM4A(quality, bitrate, sampleRate, channel, inputPath, outputDir);
             default -> throw new IllegalStateException("Invalid format: " + format);
         };
 

@@ -112,19 +112,33 @@ public class AudioPresets {
 
     public static FFmpegBuilder convertToMP3(int quality, int bitrate, int sampleRate, int channel, String inputPath, String outputDir) {
         File inputFile = new File(inputPath);
-        FFmpegBuilder builder = new FFmpegBuilder()
-                .setInput(inputPath)
-                .addOutput(outputDir + inputFile.getName().substring(0, inputFile.getName().lastIndexOf("."))+ ".mp3")
-                .setFormat("mp3")
-                .setAudioCodec("libmp3lame")
-                .setAudioSampleRate(sampleRate)
-                .setAudioQuality(quality)
-                .setAudioChannels(channel)
-                .done();
+        FFmpegBuilder builder = new FFmpegBuilder();
+        if (bitrate > quality) {
+            builder = new FFmpegBuilder()
+                    .setInput(inputPath)
+                    .addOutput(outputDir + inputFile.getName().substring(0, inputFile.getName().lastIndexOf("."))+ ".mp3")
+                    .setFormat("mp3")
+                    .setAudioCodec("libmp3lame")
+                    .setAudioSampleRate(sampleRate)
+                    .setAudioBitRate(bitrate)
+                    .setAudioChannels(channel)
+                    .done();
+        } else {
+            builder = new FFmpegBuilder()
+                    .setInput(inputPath)
+                    .addOutput(outputDir + inputFile.getName().substring(0, inputFile.getName().lastIndexOf("."))+ ".mp3")
+                    .setFormat("mp3")
+                    .setAudioCodec("libmp3lame")
+                    .setAudioSampleRate(sampleRate)
+                    .setAudioQuality(quality)
+                    .setAudioChannels(channel)
+                    .done();
+        }
+
 
         return builder;
     }
-
+    
     public static FFmpegBuilder convertToWAV(int quality, int sampleRate, int channel, String inputPath, String outputDir) {
         File inputFile = new File(inputPath);
         FFmpegBuilder builder = new FFmpegBuilder()
@@ -153,18 +167,31 @@ public class AudioPresets {
         return builder;
     }
 
-    public static FFmpegBuilder convertToM4A(int bitrate, int sampleRate, int channel, String inputPath, String outputDir) {
-        System.out.println("Converting to m4a");
+    public static FFmpegBuilder convertToM4A(int quality, int bitrate, int sampleRate, int channel, String inputPath, String outputDir) {
         File inputFile = new File(inputPath);
-        FFmpegBuilder builder = new FFmpegBuilder()
-                .setInput(inputPath)
-                .addOutput(outputDir + inputFile.getName().substring(0, inputFile.getName().lastIndexOf(".")) + ".m4a")
-                .setFormat("mp4")
-                .setAudioCodec("aac")
-                .setAudioSampleRate(sampleRate)
-                .setAudioChannels(channel)
-                .setAudioBitRate(bitrate)
-                .done();
+        FFmpegBuilder builder = new FFmpegBuilder();
+        if (bitrate > quality) {
+            builder = new FFmpegBuilder()
+                    .setInput(inputPath)
+                    .addOutput(outputDir + inputFile.getName().substring(0, inputFile.getName().lastIndexOf(".")) + ".m4a")
+                    .setFormat("mp4")
+                    .setAudioCodec("aac")
+                    .setAudioSampleRate(sampleRate)
+                    .setAudioChannels(channel)
+                    .setAudioBitRate(bitrate)
+                    .done();
+        } else {
+            builder = new FFmpegBuilder()
+                    .setInput(inputPath)
+                    .addOutput(outputDir + inputFile.getName().substring(0, inputFile.getName().lastIndexOf(".")) + ".m4a")
+                    .setFormat("mp4")
+                    .setAudioCodec("aac")
+                    .setAudioSampleRate(sampleRate)
+                    .setAudioChannels(channel)
+                    .setAudioQuality(quality)
+                    .done();
+        }
+
 
         return builder;
     }

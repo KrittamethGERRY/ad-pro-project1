@@ -91,7 +91,7 @@ public class MainViewController {
 				setDisableFunction(false);
 
 				String key = audioFormatComboBox.getSelectionModel().getSelectedItem();
-				audioQualityComboBox.setDisable(key.equals("flac") || key.equals("m4a") || key.equals("mp3"));
+				audioQualityComboBox.setDisable(key.equals("flac"));
 
 				List<Map.Entry<String, Integer>> sortedList = new ArrayList<>(
 						presets.get(audioFormatComboBox.getSelectionModel().getSelectedItem()).entrySet());
@@ -343,9 +343,13 @@ public class MainViewController {
 						return null;
 					}
 				};
+				
+				// HANDLE WHEN THE CONVSERSION IS FINISHED
 				processTask.setOnSucceeded(e -> {
 					Launcher.primaryStage.getScene().setRoot(bgRoot);
 					if (audioFiles.size() == inputListView.getItems().size()) {
+						
+						// SELECT DIRECTORY TO SAVE
 						DirectoryChooser directoryChooser = new DirectoryChooser();
 						directoryChooser.setTitle("Select a directory");
 						File selectedDir = directoryChooser.showDialog(Launcher.primaryStage);
@@ -362,6 +366,10 @@ public class MainViewController {
 							successAlert.setHeaderText(null);
 							successAlert.setContentText("File saved at '" + selectedDir + "'.");
 							successAlert.showAndWait();
+							if (successAlert.getResult() == ButtonType.OK) {
+								inputListView.getItems().clear();
+								fileMapList.clear();
+							}
 						}
 					}
 				});
