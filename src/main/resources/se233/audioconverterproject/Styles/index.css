@@ -19,6 +19,21 @@
 	-fx-background-color: linear-gradient(to bottom, #ff7e5f, #feb47b);
 }
 
+.toggle-button {
+	-fx-background-radius: 0;
+	-fx-border-width: 1px;
+	-fx-border-color: gray;
+	-fx-background-color: white;
+}
+
+.toggle-button: hover {
+	-fx-background-color: lightgray;
+}
+
+.toggle-button: active {
+	-fx-background-color: black;
+}
+
 #convertBtn {
 	-fx-background-color: #3B82F6;
 	-fx-color: #1F2937;

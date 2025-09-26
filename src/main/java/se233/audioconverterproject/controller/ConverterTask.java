@@ -1,6 +1,5 @@
 package se233.audioconverterproject.controller;
 
-import com.google.common.util.concurrent.Service;
 import javafx.concurrent.Task;
 import net.bramp.ffmpeg.FFmpeg;
 import net.bramp.ffmpeg.FFmpegExecutor;
@@ -11,13 +10,12 @@ import se233.audioconverterproject.Launcher;
 import se233.audioconverterproject.model.AudioPresets;
 import se233.audioconverterproject.model.exception.ConversionFailedException;
 
-import javax.sound.sampled.AudioFormat;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.concurrent.Callable;
 
-public class ConverterTask extends Task implements Callable<String> {
+public class ConverterTask extends Task<String> implements Callable<String> {
 
     private FFmpeg ffmpeg;
     private FFprobe ffprobe;
