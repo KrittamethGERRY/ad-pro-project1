@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.concurrent.Callable;
 
+
 public class ConverterTask extends Task<String> implements Callable<String> {
 
     private FFmpeg ffmpeg;
@@ -63,5 +64,7 @@ public class ConverterTask extends Task<String> implements Callable<String> {
 
         System.out.println("AUDIO CONVERTED!");
         return outputDir + inputFile.getName().substring(0, inputFile.getName().lastIndexOf(".")) + "." + format;
-        }
     }
+}
+
+

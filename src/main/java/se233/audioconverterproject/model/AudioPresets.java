@@ -191,8 +191,6 @@ public class AudioPresets {
                     .setAudioQuality(quality)
                     .done();
         }
-
-
         return builder;
     }
 }

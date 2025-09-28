@@ -4,7 +4,7 @@ module se233.audioconverterproject {
     requires ffmpeg;
     requires java.desktop;
     requires com.google.common;
-    requires javafx.media;
+	requires org.apache.logging.log4j;
 
 
     opens se233.audioconverterproject to javafx.fxml;

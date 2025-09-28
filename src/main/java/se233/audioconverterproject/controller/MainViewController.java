@@ -15,8 +15,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import se233.audioconverterproject.Launcher;
 import se233.audioconverterproject.model.exception.ConversionFailedException;
 import se233.audioconverterproject.model.exception.InvalidFileFormatException;
@@ -28,10 +26,14 @@ import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import static se233.audioconverterproject.model.AudioPresets.*;
 
 public class MainViewController {
+	private static final Logger logger = LogManager.getLogger(MainViewController.class);
+	
 	@FXML
 	private ListView<String> inputListView;
 
@@ -61,16 +63,21 @@ public class MainViewController {
 	private ComboBox<String> sampleRateComboBox;
 	@FXML
 	private ComboBox<String> bitrateComboBox;
+	@FXML
+	private ToggleButton pinToggleBtn;
+	@FXML
+	private ImageView pinIcon;
 
 	private Map<String, String> fileMapList = new LinkedHashMap<>();
 
 	private ToggleGroup channelsGroup;
 
 	public void initialize() {
+		logger.info("App Launched");
 		uploadIcon.setImage(new Image(Launcher.class.getResourceAsStream("music-file.png")));
-		uploadIcon.setMouseTransparent(true);
+		uploadIcon.setMouseTransparent(true);	
+		pinIcon.setImage(new Image(Launcher.class.getResourceAsStream("pin-icon.png")));
 		
-
 		// GROUPING RADIO BUTTON TOGETHER
 		channelsGroup = new ToggleGroup();
 		this.monoRadio.setToggleGroup(channelsGroup);
@@ -150,6 +157,15 @@ public class MainViewController {
 		// /////////////////////////////////////////////////////////////////////
 
 		// ALL EVENT HANDLERS
+		
+		pinToggleBtn.setOnAction(event -> {
+			if (pinToggleBtn.isSelected()) {
+				Launcher.primaryStage.setAlwaysOnTop(true);
+			} else {
+				Launcher.primaryStage.setAlwaysOnTop(false);
+			}
+		});
+		
 		inputListView.setOnDragOver(event -> {
 			Dragboard db = event.getDragboard();
 			if (db.hasFiles()) {
@@ -338,7 +354,7 @@ public class MainViewController {
 							} catch (InterruptedException | ExecutionException e) {
 								throw new ConversionFailedException(e.getMessage());
 							}
-							System.out.println(Arrays.toString(audioFiles.toArray()));
+							//logger.info(Arrays.toString(audioFiles.toArray()));
 						});
 						return null;
 					}
@@ -366,9 +382,19 @@ public class MainViewController {
 							successAlert.setHeaderText(null);
 							successAlert.setContentText("File saved at '" + selectedDir + "'.");
 							successAlert.showAndWait();
+							trace(selectedDir);
 							if (successAlert.getResult() == ButtonType.OK) {
 								inputListView.getItems().clear();
 								fileMapList.clear();
+							}
+						} else {
+							for (String audioFile: audioFiles) {
+								try {
+									File fileToRemove = new File(audioFile);
+									fileToRemove.delete();
+								} finally {
+									logger.info("File saving terminated");
+								}
 							}
 						}
 					}
@@ -407,5 +433,9 @@ public class MainViewController {
 			fos.close();
 		}
 		sourceFile.delete();
+	}
+	
+	public void trace(File dir) {
+		logger.info("Files saved at {}", dir);
 	}
 }

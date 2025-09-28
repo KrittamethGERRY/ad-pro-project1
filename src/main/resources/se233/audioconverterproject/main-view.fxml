@@ -111,7 +111,13 @@
                </right>
             </BorderPane>
             <Button fx:id="editButton" layoutX="239.0" layoutY="60.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="Edit" />
-            <ToggleButton fx:id="themeToggleBtn" layoutX="528.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Light" />
+            <ToggleButton fx:id="pinToggleBtn" layoutX="612.0" layoutY="14.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="16.0">
+               <font>
+                  <Font size="1.0" />
+               </font>
+               <graphic>
+                  <ImageView fx:id="pinIcon" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic></ToggleButton>
          </children>
       </AnchorPane>
   </children>
