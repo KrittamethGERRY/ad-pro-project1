@@ -203,7 +203,11 @@ public class MainViewController {
 						alert.setTitle("WARNING");
 						alert.setHeaderText("WARNING: Invalid format");
 						alert.setContentText("Invalid audio file format (should an audio format: .mp3, .wav, .flac, .m4a)");
+                        Launcher.primaryStage.setAlwaysOnTop(false);
 						alert.showAndWait();
+                        if (alert.getResult() == ButtonType.OK) {
+                            Launcher.primaryStage.setAlwaysOnTop(true);
+                        }
 						throw new InvalidFileFormatException("Invalid file format", new IOException());
 					} else {
 						fileMapList.put(fileName, file.getAbsolutePath());
@@ -243,7 +247,11 @@ public class MainViewController {
 				alert.setTitle("No File Selected");
 				alert.setHeaderText(null);
 				alert.setContentText("You didn't choose any file.");
+                Launcher.primaryStage.setAlwaysOnTop(false);
 				alert.showAndWait();
+                if (alert.getResult() == ButtonType.OK) {
+                    Launcher.primaryStage.setAlwaysOnTop(true);
+                }
 			}
 		});
 
@@ -270,8 +278,10 @@ public class MainViewController {
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 				alert.setContentText("Are you sure to remove the audio from the list?");
 				alert.setHeaderText(null);
+                Launcher.primaryStage.setAlwaysOnTop(false);
 				alert.showAndWait();
 				if (alert.getResult() == ButtonType.OK) {
+                    Launcher.primaryStage.setAlwaysOnTop(true);
 					inputListView.getItems().remove(selectedAudio);
 					fileMapList.remove(selectedAudio);
 					
@@ -381,11 +391,13 @@ public class MainViewController {
 							successAlert.setTitle("Conversion Complete.");
 							successAlert.setHeaderText(null);
 							successAlert.setContentText("File saved at '" + selectedDir + "'.");
+                            Launcher.primaryStage.setAlwaysOnTop(false);
 							successAlert.showAndWait();
 							trace(selectedDir);
 							if (successAlert.getResult() == ButtonType.OK) {
 								inputListView.getItems().clear();
 								fileMapList.clear();
+                                Launcher.primaryStage.setAlwaysOnTop(true);
 							}
 						} else {
 							for (String audioFile: audioFiles) {
@@ -406,7 +418,11 @@ public class MainViewController {
 				Alert alert = new Alert(Alert.AlertType.ERROR, "Please insert a file to convert.");
 				alert.setTitle("Error");
 				alert.setHeaderText(null);
+                Launcher.primaryStage.setAlwaysOnTop(false);
 				alert.showAndWait();
+                if (alert.getResult() == ButtonType.OK) {
+                    Launcher.primaryStage.setAlwaysOnTop(true);
+                }
 			}
 		});
 	}
