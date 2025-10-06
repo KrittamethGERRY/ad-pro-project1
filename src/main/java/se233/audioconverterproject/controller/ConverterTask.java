@@ -12,6 +12,7 @@ import se233.audioconverterproject.model.exception.ConversionFailedException;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.concurrent.Callable;
 
@@ -41,11 +42,11 @@ public class ConverterTask extends Task<String> implements Callable<String> {
     public String call() throws ConversionFailedException, URISyntaxException, IOException {
         System.out.println("Starting ConverterTask");
         File inputFile = new File(inputPath);
-        File ffmpegFile = new File(Launcher.class.getResource("ffmpeg/bin/ffmpeg.exe").toURI());
-        File ffprobeFile = new File(Launcher.class.getResource("ffmpeg/bin/ffprobe.exe").toURI());
+        File ffmpegFile = extractResource("ffmpeg/bin/ffmpeg.exe", "ffmpeg.exe");
+        File ffprobeFile = extractResource("ffmpeg/bin/ffprobe.exe", "ffprobe.exe");
 
-        ffmpeg = new FFmpeg(ffmpegFile.toString());
-        ffprobe = new FFprobe(ffprobeFile.toString());
+        ffmpeg = new FFmpeg(ffmpegFile.getAbsolutePath());
+        ffprobe = new FFprobe(ffprobeFile.getAbsolutePath());
 
         FFmpegBuilder builder = null;
 
@@ -64,6 +65,18 @@ public class ConverterTask extends Task<String> implements Callable<String> {
 
         System.out.println("AUDIO CONVERTED!");
         return outputDir + inputFile.getName().substring(0, inputFile.getName().lastIndexOf(".")) + "." + format;
+    }
+
+    private File extractResource(String resourcePath, String fileName) throws IOException {
+        File tempFile = new File(System.getProperty("java.io.tmpdir"), fileName);
+        try (InputStream in = Launcher.class.getResourceAsStream(resourcePath)) {
+            if (in == null) {
+                throw new IOException("Resource not found: " + resourcePath);
+            }
+            java.nio.file.Files.copy(in, tempFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+        }
+        tempFile.setExecutable(true);
+        return tempFile;
     }
 }
 

@@ -11,4 +11,5 @@ module se233.audioconverterproject {
     opens se233.audioconverterproject.controller to javafx.fxml;
     exports se233.audioconverterproject;
     exports se233.audioconverterproject.controller;
+    exports se233.audioconverterproject.model.exception;
 }
