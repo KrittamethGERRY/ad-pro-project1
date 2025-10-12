@@ -194,32 +194,37 @@ public class MainViewController {
 			String fileName;
 			if (db.hasFiles()) {
 				success = true;
-				File file = db.getFiles().get(0);
-				fileName = file.getName();
-				try {
-					if (!fileName.substring(fileName.lastIndexOf('.')).matches(".mp3|.wav|.flac|.m4a")) {
-						// ALERT WHEN INPUT INVALID FILE FORMAT
-						Alert alert = new Alert(AlertType.WARNING);
-						alert.setTitle("WARNING");
-						alert.setHeaderText("WARNING: Invalid format");
-						alert.setContentText("Invalid audio file format (should an audio format: .mp3, .wav, .flac, .m4a)");
-						boolean wasOnTop = Launcher.primaryStage.isAlwaysOnTop();
-                        if (wasOnTop) {
-                        	Launcher.primaryStage.setAlwaysOnTop(false);
-                        }
-						alert.showAndWait();
-                        if (alert.getResult() == ButtonType.OK && wasOnTop) {
-                            Launcher.primaryStage.setAlwaysOnTop(true);
-                        }
-						throw new InvalidFileFormatException("Invalid file format", new IOException());
-					} else {
-						fileMapList.put(fileName, file.getAbsolutePath());
-						inputListView.getItems().add(fileName);
-						editButton.setDisable(false);
-					}
-				} catch (InvalidFileFormatException e) {
-					e.printStackTrace();
+				int totalFiles = db.getFiles().size();
+				for (int i = 0; i < totalFiles; i++) {
+					try {
+						File file = db.getFiles().get(i);
+						fileName = file.getName();
+						
+						if (!fileName.substring(fileName.lastIndexOf('.')).matches(".mp3|.wav|.flac|.m4a")) {
+							// ALERT WHEN INPUT INVALID FILE FORMAT
+							Alert alert = new Alert(AlertType.WARNING);
+							alert.setTitle("WARNING");
+							alert.setHeaderText("WARNING: Invalid format");
+							alert.setContentText("Invalid audio file format (should an audio format: .mp3, .wav, .flac, .m4a)");
+							boolean wasOnTop = Launcher.primaryStage.isAlwaysOnTop();
+	                        if (wasOnTop) {
+	                        	Launcher.primaryStage.setAlwaysOnTop(false);
+	                        }
+							alert.showAndWait();
+	                        if (alert.getResult() == ButtonType.OK && wasOnTop) {
+	                            Launcher.primaryStage.setAlwaysOnTop(true);
+	                        }
+							throw new InvalidFileFormatException("Invalid file format", new IOException());
+						} else {
+							fileMapList.put(fileName, file.getAbsolutePath());
+							inputListView.getItems().add(fileName);
+							editButton.setDisable(false);
+						}
+					} catch (InvalidFileFormatException e) {
+						e.printStackTrace();
+					
 				}
+}
 
 			}
 
