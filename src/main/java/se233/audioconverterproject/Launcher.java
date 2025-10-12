@@ -21,7 +21,7 @@ public class Launcher extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
-        stage.setTitle("Audio File Converter");
+        stage.setTitle("GERRY Audio Converter");
         FXMLLoader fxmlLoader = new FXMLLoader(Launcher.class.getResource("main-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         String css = Launcher.class.getResource("Styles/index.css").toExternalForm();
