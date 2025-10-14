@@ -12,3 +12,7 @@ Group Member
 4. Click the convert button to begin the conversion.
 5. Select the directory to save the audio file(s)
 
+# Additional functions
+- The user can pin the application on top of the screen to facilitate the user dragging the audio file(s) easily.
+- The user can listen to the input file preview before the conversion by clicking the audio file list when the edit mode is not active, ensuring the selected audio is not mistakenly chosen.
+- The user can remove the unwanted audio file(s) from the file list by enabling the edit mode and clicking the unwanted audio file inside the list.
